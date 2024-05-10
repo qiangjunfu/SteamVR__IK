@@ -9509,7 +9509,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2668353078563435290}
-  - component: {fileID: 117051119073667722}
+  - component: {fileID: 7679135626040815254}
   m_Layer: 0
   m_Name: DirtImpact
   m_TagString: Untagged
@@ -9535,7 +9535,7 @@ Transform:
   - {fileID: 40408123706611908}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &117051119073667722
+--- !u!114 &7679135626040815254
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9544,9 +9544,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4395219796384857915}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a0d230b0655ea84e94b916cb6ffe3f1, type: 3}
+  m_Script: {fileID: 11500000, guid: 3274781f2ab641945807592594c07ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeAlive: 0
+  lifeTime: 3
 --- !u!1 &5476038853287030632
 GameObject:
   m_ObjectHideFlags: 0

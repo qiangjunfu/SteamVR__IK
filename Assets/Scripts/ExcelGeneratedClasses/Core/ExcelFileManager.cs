@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ExcelFileManager : MonoSingleTon<ExcelFileManager>, IManager
 {
-    [SerializeField, ReadOnly] string folderPath = ""; // JSON文件存放的文件夹路径
+    [SerializeField, ReadOnly] string folderPath = ""; 
     [SerializeField] List<PlayerData> playerDataList = new List<PlayerData>();
     [SerializeField] List<NPCData> npcDataList = new List<NPCData>();
     [SerializeField] List<WeaponData> weapDataList = new List<WeaponData>();

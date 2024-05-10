@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class EnemyCtrl : MonoBehaviour , IDamage
+public class EnemyCtrl : ICharacter, IDamage
 {
     [SerializeField] NPCData data;
 
@@ -137,7 +137,7 @@ public class EnemyCtrl : MonoBehaviour , IDamage
         {
             weapon = AssetsLoadManager.Instance.LoadComponent<IWeapon>(weaponData.prePath, rightGunBone);
         }
-        weapon.SetData(weaponData);
+        weapon.SetData(weaponData, this );
     }
 
 

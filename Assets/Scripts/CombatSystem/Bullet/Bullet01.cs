@@ -85,8 +85,8 @@ public class Bullet01 : IBullet
         {
             // ÏÔÊ¾µ¯¿×ÌØÐ§
             string path = "Weapons/Effects/DirtImpact";
-            HitEffect01 hitEffect01 = ComponentPoolManager.Instance .GetObject  <HitEffect01>(path ,hit.point, Quaternion.LookRotation(hit.normal));
-        }
+            HitEffect02 hitEffect02 = ComponentPoolManager.Instance .GetObject  <HitEffect02>(path ,hit.point, Quaternion.LookRotation(hit.normal));
+        } 
 
         RecycleBullet();
     }

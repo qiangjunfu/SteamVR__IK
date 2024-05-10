@@ -12,6 +12,7 @@ public class GameMain : MonoSingleTon<GameMain>
 
         // 初始化数据 
         JsonFileManager.Instance.Init();
+        ExcelFileManager.Instance.Init();
 
         ComponentPoolManager.Instance.Init();
         GameObjectPoolManager.Instance.Init();

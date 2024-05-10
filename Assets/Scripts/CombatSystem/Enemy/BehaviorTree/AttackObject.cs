@@ -10,15 +10,11 @@ public class AttackObject : Action
 {
     public SharedGameObject targetObj;
     public SharedFloat attackDis = 2;
-    public bool isLoggedAttack = false;
-
 
 
     public override void OnStart()
     {
         base.OnStart();
-
-        isLoggedAttack = false;
 
         int id = this.gameObject.GetComponent<EnemyCtrl>().GetData().selfid;
         MessageManager.Broadcast<int , int >(GameEventType.EnemyStateChange, 7 ,id );

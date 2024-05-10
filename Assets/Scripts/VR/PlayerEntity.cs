@@ -11,11 +11,6 @@ public class PlayerEntity : MonoBehaviour
     [SerializeField] List<Solver_Track> solverTrackList = new List<Solver_Track>();
     [SerializeField] bool isBindTrackLeg = true;
 
-    [SerializeField] IWeapon weapon;
-    [SerializeField] Transform weaponParent;
-    string weaponName;
-
-
 
     public List<Solver_Track> GetSolverTrackList()
     {
@@ -26,19 +21,8 @@ public class PlayerEntity : MonoBehaviour
         this.data = playerData;
 
         InitData();
-
-
-        WeaponData weaponData = JsonFileManager.Instance.GetWeaponDataList()[0];
-        SetWeapon(weaponData);
     }
-    public void SetWeapon(WeaponData weaponData)
-    {
-        if (weapon == null)
-        {
-            weapon = AssetsLoadManager.Instance.LoadComponent<IWeapon>(weaponData.prePath, weaponParent);
-        }
-        weapon.SetData(weaponData);
-    }
+
 
 
     float weight0 = 0.0f;
@@ -88,16 +72,4 @@ public class PlayerEntity : MonoBehaviour
 
 
 
-    public void Shoot()
-    {
-        if (weapon != null && weapon.GetBulletCount() > 0 && weapon.IsCanShoot())
-        {
-            weapon.Shoot();
-        }
-    }
-
-    public  void ContinueShoot()
-    {
-
-    }
 }

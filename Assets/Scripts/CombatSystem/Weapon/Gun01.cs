@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Gun01 : IWeapon
 {
+    [SerializeField ] ICharacter character;
     public Transform muzzlePosition;    // 枪口位置，用于确定子弹发射位置
     [SerializeField] int currentAmmo;   // 当前弹药量
     private float fireTimer;            // 射击计时器
@@ -13,7 +14,7 @@ public class Gun01 : IWeapon
 
 
 
-    public override void SetData(WeaponData weaponData)
+    public override void SetData(WeaponData weaponData , ICharacter character)
     {
         data.id = weaponData.id;
         data.name = weaponData.name;
@@ -29,6 +30,8 @@ public class Gun01 : IWeapon
         data.bulletPrePath = weaponData.bulletPrePath;
         data.flashPrePath = weaponData.flashPrePath;
         data.audioPrePath = weaponData.audioPrePath;
+
+        this.character = character;
 
         InitData();
     }
