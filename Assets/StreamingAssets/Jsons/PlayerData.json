@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "selfid": 0,
+    "name": "player1",
+    "type": "类型1",
+    "prePath": "Player",
+    "hp": 100,
+    "defence": 10,
+    "speed": 3.1,
+    "attack": 100,
+    "attackSpeed": 1.1,
+    "reloadTime": 1.1
+  }
+]

@@ -9,6 +9,9 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+/[Tt]errainDemoScene_URP/
+/Assets/TerrainDemoScene_URP/
+Assets/TerrainDemoScene_URP
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data

@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "selfid": 0,
+    "name": "npc1",
+    "type": "类型1",
+    "prePath": "Character/Enemy",
+    "hp": 100,
+    "defence": 10,
+    "speed": 3.1,
+    "attack": 100,
+    "attackSpeed": 1.1,
+    "reloadTime": 1.1,
+    "patrol_Speed": 2,
+    "chase_Speed": 3,
+    "view_Dis": 20,
+    "chase_Dis": 10,
+    "attack_Dis": 10
+  }
+]

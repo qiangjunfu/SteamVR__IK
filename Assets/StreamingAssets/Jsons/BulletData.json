@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "name": "bullet1",
+    "prePath": "Weapons/Bullets/Bullet01",
+    "type": "子弹1",
+    "speed": 10,
+    "lifeTime": 5,
+    "attack": 100,
+    "fireRange": 1000,
+    "bulletHolePrePath": null
+  },
+  {
+    "id": 2,
+    "name": "bullet2",
+    "prePath": "Weapons/Bullets/Bullet01",
+    "type": "子弹2",
+    "speed": 20,
+    "lifeTime": 5,
+    "attack": 100,
+    "fireRange": 1000,
+    "bulletHolePrePath": null
+  }
+]
