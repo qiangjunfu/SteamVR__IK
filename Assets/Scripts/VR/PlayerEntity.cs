@@ -26,6 +26,18 @@ public class PlayerEntity : MonoBehaviour
         this.data = playerData;
 
         InitData();
+
+
+        WeaponData weaponData = JsonFileManager.Instance.GetWeaponDataList()[0];
+        SetWeapon(weaponData);
+    }
+    public void SetWeapon(WeaponData weaponData)
+    {
+        if (weapon == null)
+        {
+            weapon = AssetsLoadManager.Instance.LoadComponent<IWeapon>(weaponData.prePath, weaponParent);
+        }
+        weapon.SetData(weaponData);
     }
 
 
@@ -40,13 +52,13 @@ public class PlayerEntity : MonoBehaviour
         }
 
 
-        if (weapon == null)
-        {
-            weaponName = "Weapons/Gun/MP-40";
-            weapon = AssetsLoadManager.Instance.LoadComponent<IWeapon>(weaponName, weaponParent);
-            weapon.transform.localPosition = Vector3.zero;
-            weapon.transform.localRotation = Quaternion.identity;
-        }
+        //if (weapon == null)
+        //{
+        //    weaponName = "Weapons/Gun/MP-40";
+        //    weapon = AssetsLoadManager.Instance.LoadComponent<IWeapon>(weaponName, weaponParent);
+        //    weapon.transform.localPosition = Vector3.zero;
+        //    weapon.transform.localRotation = Quaternion.identity;
+        //}
 
 
         //if (isBindTrackLeg)

@@ -127,7 +127,19 @@ public class EnemyCtrl : MonoBehaviour , IDamage
 
 
         InitData();
+
+        WeaponData weaponData = JsonFileManager.Instance.GetWeaponDataList()[0];
+        SetWeapon(weaponData);
     }
+    public void SetWeapon(WeaponData weaponData)
+    {
+        if (weapon == null)
+        {
+            weapon = AssetsLoadManager.Instance.LoadComponent<IWeapon>(weaponData.prePath, rightGunBone);
+        }
+        weapon.SetData(weaponData);
+    }
+
 
     private void InitData()
     {
@@ -150,9 +162,9 @@ public class EnemyCtrl : MonoBehaviour , IDamage
         }
 
 
-        WeaponData weaponData = JsonFileManager.Instance.GetWeaponDataList()[0];
-        if (weapon == null) weapon = AssetsLoadManager.Instance.LoadComponent<IWeapon>(weaponData.prePath, rightGunBone);
-        weapon.SetData(weaponData);
+        //WeaponData weaponData = JsonFileManager.Instance.GetWeaponDataList()[0];
+        //if (weapon == null) weapon = AssetsLoadManager.Instance.LoadComponent<IWeapon>(weaponData.prePath, rightGunBone);
+        //weapon.SetData(weaponData);
 
     }
 

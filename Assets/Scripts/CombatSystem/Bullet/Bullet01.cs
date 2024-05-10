@@ -77,15 +77,15 @@ public class Bullet01 : IBullet
             enemyDamage.TakeDamage(data.attack);
 
             //显示命中特效
+            //string path = "";
+            //HitEffect01 hitEffect01 = ComponentPoolManager.Instance.GetObject<HitEffect01>(path, hit.point, Quaternion.LookRotation(hit.normal));
+
         }
         else
         {
-            //// 显示弹孔特效
-            //if (string.IsNullOrEmpty(bulletHoleName))
-            //{
-            //    GameObject impactEffect = GameObjectPoolManager.Instance.GetObject(bulletHoleName, hit.point, Quaternion.LookRotation(hit.normal));
-            //    impactEffect.SetActive(true); // 确保激活对象
-            //}
+            // 显示弹孔特效
+            string path = "Weapons/Effects/DirtImpact";
+            HitEffect01 hitEffect01 = ComponentPoolManager.Instance .GetObject  <HitEffect01>(path ,hit.point, Quaternion.LookRotation(hit.normal));
         }
 
         RecycleBullet();
