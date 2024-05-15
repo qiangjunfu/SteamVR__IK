@@ -13,7 +13,7 @@ public class EnemyCtrl : ICharacter, IDamage
     [SerializeField] private Actions actions;
     [SerializeField] private BehaviorTree behaviorTree;
     [SerializeField] List<GameObject> Patrol_Waypoints;
-    [SerializeField] private string enemyState;
+    [SerializeField] private NPCState enemyState = NPCState.Stay;
 
 
     // ---- ∞Û∂®Œ‰∆˜
@@ -24,20 +24,19 @@ public class EnemyCtrl : ICharacter, IDamage
     #region MyRegion
     private void OnEnable()
     {
-        MessageManager.AddListener<int, int>(GameEventType.EnemyStateChange, OnEnemyStateChange);
+        MessageManager.AddListener<NPCState, int>(GameEventType.EnemyStateChange, OnEnemyStateChange);
 
         //if (actions == null) actions = GetComponent<Actions>();
         //actions.AddAnimationEvent(actions.GetAnimator(), "Fire SniperRifle", "StartFireEvent", 0);
     }
-
-
     private void OnDisable()
     {
-        MessageManager.RemoveListener<int, int>(GameEventType.EnemyStateChange, OnEnemyStateChange);
+        MessageManager.RemoveListener<NPCState, int>(GameEventType.EnemyStateChange, OnEnemyStateChange);
 
         //actions.CleanAllEvent(actions.GetAnimator());
     }
-    private void OnEnemyStateChange(int arg1, int arg2)
+
+    private void OnEnemyStateChange(NPCState arg1, int arg2)
     {
         // 1:Stay 
         // 2:Walk 
@@ -52,45 +51,30 @@ public class EnemyCtrl : ICharacter, IDamage
         if (actions == null) { actions = GetComponent<Actions>(); }
 
 
-        string aniName = "";
+        enemyState = arg1;
         switch (arg1)
         {
-            case 1:
-                aniName = "Stay";
+            case NPCState.Stay:
                 actions.Stay();
                 break;
-            case 2:
-                aniName = "Walk";
+            case NPCState.Patrol:
                 actions.Walk();
                 break;
-            case 3:
-                aniName = "Run";
+            case NPCState.Pursue:
                 actions.Run();
                 break;
-            case 4:
-                aniName = "Sitting";
+            case NPCState.Attack:
+                actions.Attack();
                 break;
-            case 5:
-                aniName = "Jump";
+            case NPCState.Damage:
                 break;
-            case 6:
-                aniName = "Aiming";
-                break;
-            case 7:
-                aniName = "Attack";
-                break;
-            case 8:
-                aniName = "Damage";
-                break;
-            case 9:
-                aniName = "Death Reset";
+            case NPCState.Flee:
+                actions.Run();
                 break;
             default:
                 break;
         }
-        //actions.SendMessage(aniName, SendMessageOptions.DontRequireReceiver);
 
-        enemyState = aniName;
     }
 
     private void StartFireEvent()
@@ -124,11 +108,13 @@ public class EnemyCtrl : ICharacter, IDamage
         data.view_Dis = enemyData.view_Dis;
         data.chase_Dis = enemyData.chase_Dis;
         data.attack_Dis = enemyData.attack_Dis;
+        data.flee_HP = enemyData.flee_HP;
+        data.safe_Dis = enemyData.safe_Dis;
 
 
         InitData();
 
-        WeaponData weaponData =ExcelFileManager .Instance.GetWeaponDataList()[0];
+        WeaponData weaponData = ExcelFileManager.Instance.GetWeaponDataList()[0];
         SetWeapon(weaponData);
     }
     public void SetWeapon(WeaponData weaponData)
@@ -137,7 +123,7 @@ public class EnemyCtrl : ICharacter, IDamage
         {
             weapon = AssetsLoadManager.Instance.LoadComponent<IWeapon>(weaponData.prePath, rightGunBone);
         }
-        weapon.SetData(weaponData, this );
+        weapon.SetData(weaponData, this);
     }
 
 
@@ -153,12 +139,14 @@ public class EnemyCtrl : ICharacter, IDamage
             //Patrol_Waypoints = UnityTools.GetAllChildrenGameObject(parent);
             Patrol_Waypoints = EnemyManager.Instance.Patrol_Waypoints;
 
-            behaviorTree.SetVariable("Patrol_Waypoints", (SharedGameObjectList)Patrol_Waypoints);
-            behaviorTree.SetVariable("Patrol_Speed", (SharedFloat)(data.patrol_Speed));
-            behaviorTree.SetVariable("Chase_Speed", (SharedFloat)(data.chase_Speed));
-            behaviorTree.SetVariable("View_Dis", (SharedFloat)(data.view_Dis));
-            behaviorTree.SetVariable("Chase_Dis", (SharedFloat)(data.chase_Dis));
-            behaviorTree.SetVariable("Attack_Dis", (SharedFloat)(data.attack_Dis));
+            behaviorTree.SetVariable("SelfId", (SharedInt)(data.selfid));
+            behaviorTree.SetVariable("WayPoints", (SharedGameObjectList)Patrol_Waypoints);
+            behaviorTree.SetVariable("PatrolSpeed", (SharedFloat)(data.patrol_Speed));
+            behaviorTree.SetVariable("PursueSpeed", (SharedFloat)(data.chase_Speed));
+            behaviorTree.SetVariable("ViewDis", (SharedFloat)(data.view_Dis));
+            behaviorTree.SetVariable("AttackDis", (SharedFloat)(data.attack_Dis));
+            behaviorTree.SetVariable("FleeHP", (SharedInt)(data.flee_HP));
+            behaviorTree.SetVariable("SafeDis", (SharedFloat)(data.safe_Dis)); 
         }
 
 
@@ -170,19 +158,26 @@ public class EnemyCtrl : ICharacter, IDamage
 
     void Start()
     {
-        InitData();
+        //µ•∂¿≤‚ ‘();
 
-        //actions.AddAnimationEvent(actions.GetAnimator(), "Fire SniperRifle", "StartFireEvent", 0.05f);
+        InitData();
     }
     private void OnDestroy()
     {
-        //if (actions != null) actions.CleanAllEvent(actions.GetAnimator());
+
     }
 
 
+    void µ•∂¿≤‚ ‘() 
+    {
+
+        NPCData enemyData = ExcelFileManager.Instance.GetNPCDataList()[0];
+        SetData(enemyData, 1);
+    }
+
     void Update()
     {
-        if (enemyState == "Attack")
+        if (enemyState == NPCState.Attack)
         {
             Attack();
         }
@@ -216,5 +211,18 @@ public class EnemyCtrl : ICharacter, IDamage
         Debug.Log(gameObject.name + " has been defeated!");
 
     }
+
+}
+
+
+
+public enum NPCState
+{
+    Stay = 1,
+    Patrol,
+    Pursue,
+    Attack,
+    Damage,
+    Flee,
 
 }

@@ -197,6 +197,65 @@ public class ExcelFileManager : MonoSingleTon<ExcelFileManager>, IManager
             Debug.Log($"Null value for {member.Name} in row.");
         }
     }
+    private void SetMemberValue2(MemberInfo member, object instance, object value)
+    {
+        if (value != DBNull.Value)
+        {
+            if (member.MemberType == MemberTypes.Property)
+            {
+                var propertyInfo = (PropertyInfo)member;
+                if (propertyInfo.PropertyType.IsArray)
+                {
+                    SetPropertyArrayValue(propertyInfo, instance, value.ToString());
+                }
+                else
+                {
+                    // 检查属性类型是否为 float 或 double，并进行适当的转换
+                    if (propertyInfo.PropertyType == typeof(float))
+                    {
+                        propertyInfo.SetValue(instance, Convert.ToSingle(value), null);
+                    }
+                    else if (propertyInfo.PropertyType == typeof(double))
+                    {
+                        propertyInfo.SetValue(instance, Convert.ToDouble(value), null);
+                    }
+                    else
+                    {
+                        propertyInfo.SetValue(instance, Convert.ChangeType(value, propertyInfo.PropertyType), null);
+                    }
+                }
+            }
+            else if (member.MemberType == MemberTypes.Field)
+            {
+                var fieldInfo = (FieldInfo)member;
+                if (fieldInfo.FieldType.IsArray)
+                {
+                    SetFieldArrayValue(fieldInfo, instance, value.ToString());
+                }
+                else
+                {
+                    // 检查字段类型是否为 float 或 double，并进行适当的转换
+                    if (fieldInfo.FieldType == typeof(float))
+                    {
+                        fieldInfo.SetValue(instance, Convert.ToSingle(value));
+                    }
+                    else if (fieldInfo.FieldType == typeof(double))
+                    {
+                        fieldInfo.SetValue(instance, Convert.ToDouble(value));
+                    }
+                    else
+                    {
+                        fieldInfo.SetValue(instance, Convert.ChangeType(value, fieldInfo.FieldType));
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.Log($"Null value for {member.Name} in row.");
+        }
+    }
+
 
     private void SetPropertyArrayValue(PropertyInfo propertyInfo, object instance, string stringValue)
     {

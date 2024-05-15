@@ -14,7 +14,7 @@ public class NPCData
     [SerializeField, ReadOnly] public string prePath;
     [SerializeField, ReadOnly] public int hp;
     [SerializeField, ReadOnly] public int defence;
-    [SerializeField, ReadOnly] public float speed;
+    [SerializeField, ReadOnly] public int speed;
     [SerializeField, ReadOnly] public int attack;
     [SerializeField, ReadOnly] public float attackSpeed;
     [SerializeField, ReadOnly] public float reloadTime;
@@ -23,6 +23,8 @@ public class NPCData
     [SerializeField, ReadOnly] public int view_Dis;
     [SerializeField, ReadOnly] public int chase_Dis;
     [SerializeField, ReadOnly] public int attack_Dis;
+    [SerializeField, ReadOnly] public int flee_HP;
+    [SerializeField, ReadOnly] public int safe_Dis;
 
 
     public NPCData() { }

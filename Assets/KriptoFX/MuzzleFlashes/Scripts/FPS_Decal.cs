@@ -46,7 +46,7 @@ public class FPS_Decal : MonoBehaviour
             transform.localScale = new Vector3(randomScaleRange, ScreenSpaceDecals ? startScale.y : 0.001f, randomScaleRange);
         }
 
-        if (Camera.main.depthTextureMode != DepthTextureMode.Depth) Camera.main.depthTextureMode = DepthTextureMode.Depth;
+        if (Camera.main != null && Camera.main.depthTextureMode != DepthTextureMode.Depth) Camera.main.depthTextureMode = DepthTextureMode.Depth;
         
     }
 

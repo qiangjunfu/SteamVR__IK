@@ -20,15 +20,17 @@ public class EnemyManager : MonoSingleTon<EnemyManager>, IManager
 
     public void Init()
     {
-        GameObject waypoints = GameObject.Find("Patrol_Waypoints");
+        GameObject waypoints = GameObject.Find("WayPoints");
         if (waypoints == null)
         {
-            string path = "NPC/Patrol_Waypoints";
+            string path = "NPC/WayPoints";
             waypoints = AssetsLoadManager.Instance.LoadObject<GameObject>(path);
         }
         spawnPos = waypoints.transform;
         this.patrol_Waypoints = UnityTools.GetAllChildrenGameObject(waypoints);
 
+
+        maxEnemyNum = 2;
         for (int i = 0; i < maxEnemyNum; i++)
         {
             NPCData enemyData = ExcelFileManager.Instance.GetNPCDataList()[0];

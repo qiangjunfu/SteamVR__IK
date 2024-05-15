@@ -13,8 +13,10 @@
     "reloadTime": 1.1,
     "patrol_Speed": 2,
     "chase_Speed": 3,
-    "view_Dis": 20,
-    "chase_Dis": 10,
-    "attack_Dis": 10
+    "view_Dis": 30,
+    "chase_Dis": 9.1,
+    "attack_Dis": 10,
+    "flee_HP": 30,
+    "safe_Dis": 20
   }
 ]
