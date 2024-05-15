@@ -71,7 +71,7 @@ public class Gun01 : IWeapon
         if (currentAmmo > 0 && fireTimer <= 0)
         {
             // 从对象池中获取子弹，并设置位置和方向
-            BulletData bulletData = JsonFileManager.Instance.GetBulletDataList()[0];
+            BulletData bulletData = ExcelFileManager.Instance.GetBulletDataList()[0];
             bullet = ComponentPoolManager.Instance.GetObject<IBullet>(bulletData.prePath, muzzlePosition.position, muzzlePosition.rotation);
             bullet.SetData(bulletData);
 

@@ -128,7 +128,7 @@ public class EnemyCtrl : ICharacter, IDamage
 
         InitData();
 
-        WeaponData weaponData = JsonFileManager.Instance.GetWeaponDataList()[0];
+        WeaponData weaponData =ExcelFileManager .Instance.GetWeaponDataList()[0];
         SetWeapon(weaponData);
     }
     public void SetWeapon(WeaponData weaponData)

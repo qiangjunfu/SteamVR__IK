@@ -33,7 +33,7 @@ public class PlayerVR : ICharacter, IDamage
         data.reloadTime = playerData.reloadTime;
 
 
-        WeaponData weaponData = JsonFileManager.Instance.GetWeaponDataList()[0];
+        WeaponData weaponData = ExcelFileManager.Instance.GetWeaponDataList()[0];
         SetWeapon(weaponData);
     }
     public void SetWeapon(WeaponData weaponData)
@@ -55,17 +55,17 @@ public class PlayerVR : ICharacter, IDamage
         if (vr_trackList.Count == 0) vr_trackList = UnityTools.GetAllChildrenComponents<VR_Track>(this.gameObject);
 
 
-        PlayerData playerData  = JsonFileManager.Instance.GetPlayerDataList()[0];
+        PlayerData playerData  = ExcelFileManager.Instance.GetPlayerDataList()[0];
         SetData(playerData);
         deviceTrackManager.InitBind_DeviceTrack(data);
 
 
-        playerEntity.SetData(data);
-        solverTrackList = playerEntity.GetSolverTrackList();
-        for (int i = 0; i < vr_trackList.Count; i++)
-        {
-            VRTrack_Bind_SolverTrack(vr_trackList[i]);
-        }
+        //playerEntity.SetData(data);
+        //solverTrackList = playerEntity.GetSolverTrackList();
+        //for (int i = 0; i < vr_trackList.Count; i++)
+        //{
+        //    VRTrack_Bind_SolverTrack(vr_trackList[i]);
+        //}
 
 
    

@@ -31,7 +31,7 @@ public class EnemyManager : MonoSingleTon<EnemyManager>, IManager
 
         for (int i = 0; i < maxEnemyNum; i++)
         {
-            NPCData enemyData = JsonFileManager.Instance.GetNPCDataList()[0];
+            NPCData enemyData = ExcelFileManager.Instance.GetNPCDataList()[0];
             AddEnemy(enemyData, index);
         }
     }
@@ -41,7 +41,7 @@ public class EnemyManager : MonoSingleTon<EnemyManager>, IManager
     {
         //if (enemyList.Count < 2)
         //{
-        //    NPCData enemyData = JsonFileManager.Instance.GetNPCDataList()[0];
+        //    NPCData enemyData = ExcelFileManager.Instance.GetNPCDataList()[0];
         //    AddEnemy(enemyData, index); 
         //}
     }
