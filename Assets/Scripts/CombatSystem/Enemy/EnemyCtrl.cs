@@ -143,6 +143,7 @@ public class EnemyCtrl : ICharacter, IDamage
             behaviorTree.SetVariable("WayPoints", (SharedGameObjectList)Patrol_Waypoints);
             behaviorTree.SetVariable("PatrolSpeed", (SharedFloat)(data.patrol_Speed));
             behaviorTree.SetVariable("PursueSpeed", (SharedFloat)(data.chase_Speed));
+            behaviorTree.SetVariable("PursueDis", (SharedFloat)(data.chase_Dis));
             behaviorTree.SetVariable("ViewDis", (SharedFloat)(data.view_Dis));
             behaviorTree.SetVariable("AttackDis", (SharedFloat)(data.attack_Dis));
             behaviorTree.SetVariable("FleeHP", (SharedInt)(data.flee_HP));

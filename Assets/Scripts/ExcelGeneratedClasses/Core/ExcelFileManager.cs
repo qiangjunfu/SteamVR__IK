@@ -18,6 +18,7 @@ public class ExcelFileManager : MonoSingleTon<ExcelFileManager>, IManager
     [SerializeField] List<BulletData> bulletDataList = new List<BulletData>();
 
     [SerializeField] List<VRDeviceData> vrDeviceDataList = new List<VRDeviceData>();
+    [SerializeField] List<SettingData> settingDataList = new List<SettingData>();
 
 
 
@@ -108,6 +109,10 @@ public class ExcelFileManager : MonoSingleTon<ExcelFileManager>, IManager
                         case "VRDeviceData":
                             List<VRDeviceData> gunDataDataList = JsonConvert.DeserializeObject<List<VRDeviceData>>(jsonData);
                             this.vrDeviceDataList.AddRange(gunDataDataList);
+                            break;
+                        case "SettingData":
+                            List<SettingData> SettingDataList = JsonConvert.DeserializeObject<List<SettingData>>(jsonData);
+                            this.settingDataList.AddRange(SettingDataList);
                             break;
                         default:
                             Debug.LogWarning($"Unsupported data type {dataType}");

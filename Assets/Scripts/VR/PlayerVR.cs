@@ -50,7 +50,6 @@ public class PlayerVR : ICharacter, IDamage
     void Start()
     {
         if (deviceTrackManager == null) deviceTrackManager = GetComponent<DeviceTrackManager>();
-        //if (playerEntity == null) playerEntity = AssetsLoadManager.Instance.LoadComponent<PlayerEntity>("VR/PlayerEntity");
         if (playerEntity == null) playerEntity = transform.Find("PlayerEntity").GetComponent<PlayerEntity>();
         if (vr_trackList.Count == 0) vr_trackList = UnityTools.GetAllChildrenComponents<VR_Track>(this.gameObject);
 

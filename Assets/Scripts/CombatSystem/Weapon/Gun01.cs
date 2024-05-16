@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Gun01 : IWeapon
 {
     [SerializeField ] ICharacter character;
@@ -21,8 +22,7 @@ public class Gun01 : IWeapon
         data.prePath = weaponData.prePath;
         data.type = weaponData.type;
         data.attack = weaponData.attack;
-        //data.maxAmmo = weaponData.maxAmmo;
-        data.maxAmmo = 10000000; //暂时默认一直有子弹
+        data.maxAmmo = weaponData.maxAmmo;
         data.reloadTime = weaponData.reloadTime;
         data.recoil = weaponData.recoil;
         data.fireRate = weaponData.fireRate;
