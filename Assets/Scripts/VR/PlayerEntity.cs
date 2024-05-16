@@ -11,11 +11,6 @@ public class PlayerEntity : MonoBehaviour
     [SerializeField] List<Solver_Track> solverTrackList = new List<Solver_Track>();
     [SerializeField] bool isBindTrackLeg = true;
 
-    [SerializeField] IWeapon weapon;
-    [SerializeField] Transform weaponParent;
-    string weaponName;
-
-
 
     public List<Solver_Track> GetSolverTrackList()
     {
@@ -29,6 +24,7 @@ public class PlayerEntity : MonoBehaviour
     }
 
 
+
     float weight0 = 0.0f;
     float weight1 = 1f;
     public void InitData()
@@ -40,13 +36,13 @@ public class PlayerEntity : MonoBehaviour
         }
 
 
-        if (weapon == null)
-        {
-            weaponName = "Weapons/Gun/MP-40";
-            weapon = AssetsLoadManager.Instance.LoadComponent<IWeapon>(weaponName, weaponParent);
-            weapon.transform.localPosition = Vector3.zero;
-            weapon.transform.localRotation = Quaternion.identity;
-        }
+        //if (weapon == null)
+        //{
+        //    weaponName = "Weapons/Gun/MP-40";
+        //    weapon = AssetsLoadManager.Instance.LoadComponent<IWeapon>(weaponName, weaponParent);
+        //    weapon.transform.localPosition = Vector3.zero;
+        //    weapon.transform.localRotation = Quaternion.identity;
+        //}
 
 
         //if (isBindTrackLeg)
@@ -76,16 +72,4 @@ public class PlayerEntity : MonoBehaviour
 
 
 
-    public void Shoot()
-    {
-        if (weapon != null && weapon.GetBulletCount() > 0 && weapon.IsCanShoot())
-        {
-            weapon.Shoot();
-        }
-    }
-
-    public  void ContinueShoot()
-    {
-
-    }
 }

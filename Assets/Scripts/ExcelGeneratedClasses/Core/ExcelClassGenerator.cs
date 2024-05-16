@@ -58,6 +58,10 @@ public class ExcelClassGenerator : EditorWindow
       
     }
 
+
+    // -----------
+
+    #region MyRegion
     private void GenerateClassForExcel(string filePath)
     {
         using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
@@ -82,21 +86,6 @@ public class ExcelClassGenerator : EditorWindow
                 classContent.AppendLine($"public class {className}");
                 classContent.AppendLine("{");
 
-                //foreach (DataColumn column in dataTable.Columns)
-                //{
-                //    string propertyName = column.ColumnName.Replace(" ", "").Replace("-", "");
-                //    string type = InferDataType(dataTable, column);
-                //    classContent.AppendLine($"    [SerializeField, ReadOnly] private {type} {propertyName};");
-                //}
-                //classContent.AppendLine("\n");
-                //foreach (DataColumn column in dataTable.Columns)
-                //{
-                //    string propertyName = column.ColumnName.Replace(" ", "").Replace("-", "");
-                //    string type = InferDataType(dataTable, column);
-                //    string propertyName_Capital = CapitalizeFirstLetter(propertyName);
-                //    //public int Id { get => id; set => id = value; }
-                //    classContent.AppendLine($"    public {type} {propertyName_Capital} {{ get => {propertyName}; set => {propertyName} = value; }}");
-                //}
                 foreach (DataColumn column in dataTable.Columns)
                 {
                     string propertyName = column.ColumnName.Replace(" ", "").Replace("-", "");
@@ -108,7 +97,6 @@ public class ExcelClassGenerator : EditorWindow
 
                 classContent.AppendLine("}");
 
-
                 string folderPath = Path.Combine(Application.dataPath, "Scripts/ExcelGeneratedClasses");
                 if (!Directory.Exists(folderPath))
                     Directory.CreateDirectory(folderPath);
@@ -118,6 +106,7 @@ public class ExcelClassGenerator : EditorWindow
             }
         }
     }
+
 
     private string InferDataType(DataTable dataTable, DataColumn column)
     {
@@ -130,7 +119,7 @@ public class ExcelClassGenerator : EditorWindow
 
         foreach (DataRow row in dataTable.Rows)
         {
-            string cellValue = row[column].ToString();
+            string cellValue = row[column].ToString().Trim();
             string[] values = cellValue.Split(',');
 
             if (values.Length > 1) // There's a comma, assume array
@@ -157,9 +146,9 @@ public class ExcelClassGenerator : EditorWindow
         }
         else
         {
-            if (allInt) return "int";
+            if (allInt && !allFloat) return "int";
             if (allBool) return "bool";
-            if (allFloat) return "float";
+            if (allFloat) return "float"; // Ensure floats are recognized correctly
             return "string"; // Default to string if no specific type matches
         }
     }
@@ -168,11 +157,12 @@ public class ExcelClassGenerator : EditorWindow
     {
         foreach (string value in values)
         {
-            if (!int.TryParse(value.Trim(), out _))
+            string trimmedValue = value.Trim();
+            if (!IsInteger(trimmedValue))
                 allInt = false;
-            if (!bool.TryParse(value.Trim(), out _))
+            if (!bool.TryParse(trimmedValue, out _))
                 allBool = false;
-            if (!float.TryParse(value.Trim(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out _))
+            if (!IsFloat(trimmedValue))
                 allFloat = false;
         }
     }
@@ -180,13 +170,36 @@ public class ExcelClassGenerator : EditorWindow
     private void UpdateTypeChecks(string value, ref bool allInt, ref bool allBool, ref bool allFloat)
     {
         value = value.Trim();
-        if (!int.TryParse(value, out _))
+        if (!IsInteger(value))
             allInt = false;
         if (!bool.TryParse(value, out _))
             allBool = false;
-        if (!float.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out _))
+        if (!IsFloat(value))
             allFloat = false;
     }
+
+    private bool IsInteger(string value)
+    {
+        // Ensure that values like "3.00" are not treated as integers
+        if (value.Contains("."))
+        {
+            return false;
+        }
+        return int.TryParse(value, out _);
+    }
+
+    private bool IsFloat(string value)
+    {
+        if (float.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out float result))
+        {
+            // Ensure floats are recognized, even if they look like integers (e.g., "3.00")
+            return result % 1 != 0 || value.Contains(".");
+        }
+        return false;
+    }
+
+    #endregion
+
 
 
     public string CapitalizeFirstLetter(string input)

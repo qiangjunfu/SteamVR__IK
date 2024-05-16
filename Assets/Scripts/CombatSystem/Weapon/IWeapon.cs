@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class IWeapon : MonoBehaviour
 {
     [SerializeField] protected  WeaponData data;
-    public abstract void SetData(WeaponData weaponData);
+    public abstract void SetData(WeaponData weaponData, ICharacter character);
     public abstract int GetBulletCount();
     public abstract bool IsCanShoot();
 

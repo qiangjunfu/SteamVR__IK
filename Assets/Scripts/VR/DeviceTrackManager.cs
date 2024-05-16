@@ -18,7 +18,7 @@ public class DeviceTrackManager : MonoBehaviour
     public void InitBind_DeviceTrack(PlayerData playerData)
     {
         this.playerData = playerData;
-        vrDeviceDataList = JsonFileManager.Instance.GetVRDeviceDataList();
+        vrDeviceDataList = ExcelFileManager.Instance.GetVRDeviceDataList();
 
 
         if (trackedObject_Pelvis == null)

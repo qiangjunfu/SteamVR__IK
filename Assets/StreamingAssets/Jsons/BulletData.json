@@ -8,7 +8,8 @@
     "lifeTime": 5,
     "attack": 100,
     "fireRange": 1000,
-    "bulletHolePrePath": null
+    "bulletHolePrePath": "Weapons/Effects/DirtImpact",
+    "bulletHolePrePath_Chara": "Weapons/Effects/DirtImpact"
   },
   {
     "id": 2,
@@ -19,6 +20,7 @@
     "lifeTime": 5,
     "attack": 100,
     "fireRange": 1000,
-    "bulletHolePrePath": null
+    "bulletHolePrePath": "Weapons/Effects/DirtImpact",
+    "bulletHolePrePath_Chara": "Weapons/Effects/DirtImpact"
   }
 ]

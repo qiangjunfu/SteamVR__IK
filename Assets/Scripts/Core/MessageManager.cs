@@ -14,9 +14,16 @@ public enum GameEventType
     WebRequestError,
 
     /// <summary>
+    /// 敌人AI状态改变
     /// 参数1: 状态   参数2: 拥有者id
     /// </summary>
-    EnemyStateChange
+    EnemyStateChange,
+
+    /// <summary>
+    /// 得分改变
+    /// </summary>
+    ScoreChanged,
+    KillEvent
 }
 
 public delegate void Callback();

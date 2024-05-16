@@ -7,7 +7,7 @@ public class EnemyManager : MonoSingleTon<EnemyManager>, IManager
     [SerializeField] Transform spawnPos;
     [SerializeField] List<GameObject> patrol_Waypoints = new List<GameObject>();
     [SerializeField] List<EnemyCtrl> enemyList = new List<EnemyCtrl>();
-    [SerializeField] int maxEnemyNum = 1;
+    [SerializeField] int maxEnemyNum = 5;
 
 
     public List<GameObject> Patrol_Waypoints
@@ -20,20 +20,20 @@ public class EnemyManager : MonoSingleTon<EnemyManager>, IManager
 
     public void Init()
     {
-        GameObject waypoints = GameObject.Find("Patrol_Waypoints");
+        GameObject waypoints = GameObject.Find("WayPoints");
         if (waypoints == null)
         {
-            string path = "NPC/Patrol_Waypoints";
+            string path = "NPC/WayPoints";
             waypoints = AssetsLoadManager.Instance.LoadObject<GameObject>(path);
-            //GameObject g  = Resources.Load<GameObject>(path);
-            //waypoints = Instantiate(g) as GameObject;
         }
         spawnPos = waypoints.transform;
         this.patrol_Waypoints = UnityTools.GetAllChildrenGameObject(waypoints);
 
+
+        maxEnemyNum = 5;
         for (int i = 0; i < maxEnemyNum; i++)
         {
-            NPCData enemyData = JsonFileManager.Instance.GetNPCDataList()[0];
+            NPCData enemyData = ExcelFileManager.Instance.GetNPCDataList()[0];
             AddEnemy(enemyData, index);
         }
     }
@@ -43,7 +43,7 @@ public class EnemyManager : MonoSingleTon<EnemyManager>, IManager
     {
         //if (enemyList.Count < 2)
         //{
-        //    NPCData enemyData = JsonFileManager.Instance.GetNPCDataList()[0];
+        //    NPCData enemyData = ExcelFileManager.Instance.GetNPCDataList()[0];
         //    AddEnemy(enemyData, index); 
         //}
     }
