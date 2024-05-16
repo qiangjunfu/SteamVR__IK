@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Gun01 : IWeapon
 {
-    [SerializeField ] ICharacter character;
+    [SerializeField ] ICharacter owner;
     public Transform muzzlePosition;    // 枪口位置，用于确定子弹发射位置
     [SerializeField] int currentAmmo;   // 当前弹药量
     private float fireTimer;            // 射击计时器
@@ -31,7 +31,7 @@ public class Gun01 : IWeapon
         data.flashPrePath = weaponData.flashPrePath;
         data.audioPrePath = weaponData.audioPrePath;
 
-        this.character = character;
+        this.owner = character;
 
         InitData();
     }
@@ -70,10 +70,10 @@ public class Gun01 : IWeapon
     {
         if (currentAmmo > 0 && fireTimer <= 0)
         {
-            // 从对象池中获取子弹，并设置位置和方向
+            // 创建子弹
             BulletData bulletData = ExcelFileManager.Instance.GetBulletDataList()[0];
             bullet = ComponentPoolManager.Instance.GetObject<IBullet>(bulletData.prePath, muzzlePosition.position, muzzlePosition.rotation);
-            bullet.SetData(bulletData);
+            bullet.SetData(bulletData ,owner , this );
 
             // 实例化枪口闪光
             flash = ComponentPoolManager.Instance.GetObject<IMuzzleFlash>(data.flashPrePath, muzzlePosition.position, muzzlePosition.rotation);

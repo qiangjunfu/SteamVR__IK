@@ -13,11 +13,17 @@ public class PlayerVR : ICharacter, IDamage
     [SerializeField] DeviceTrackManager deviceTrackManager;
     [SerializeField] List<VR_Track> vr_trackList = new List<VR_Track>();
     [SerializeField] List<Solver_Track> solverTrackList = new List<Solver_Track>();
+    [SerializeField] PlayerHitCollder playerHitCollder;
+
 
     [SerializeField] IWeapon weapon;
     [SerializeField] Transform weaponParent;
 
 
+    public override int GetId()
+    {
+        return data.selfid;
+    }
     public void SetData(PlayerData playerData)
     {
         data.id = playerData.id;
@@ -47,14 +53,28 @@ public class PlayerVR : ICharacter, IDamage
 
 
 
+    public int HP_GetSet(int? value = null)
+    {
+        if (value.HasValue)
+        {
+            data.hp = value.Value;
+        }
+
+        return data.hp;
+    }
+
+
+
+
     void Start()
     {
         if (deviceTrackManager == null) deviceTrackManager = GetComponent<DeviceTrackManager>();
         if (playerEntity == null) playerEntity = transform.Find("PlayerEntity").GetComponent<PlayerEntity>();
+        if (playerHitCollder == null) playerHitCollder = transform.Find("PlayerHitCollder").GetComponent<PlayerHitCollder>();
         if (vr_trackList.Count == 0) vr_trackList = UnityTools.GetAllChildrenComponents<VR_Track>(this.gameObject);
 
 
-        PlayerData playerData  = ExcelFileManager.Instance.GetPlayerDataList()[0];
+        PlayerData playerData = ExcelFileManager.Instance.GetPlayerDataList()[0];
         SetData(playerData);
         deviceTrackManager.InitBind_DeviceTrack(data);
 
@@ -66,8 +86,9 @@ public class PlayerVR : ICharacter, IDamage
         //    VRTrack_Bind_SolverTrack(vr_trackList[i]);
         //}
 
+        playerHitCollder.SetData(this);
 
-   
+
 
         // 扳机
         SteamVR_Actions.default_GrabPinch.onChange += Default_GrabPinch_onChange;
@@ -80,7 +101,7 @@ public class PlayerVR : ICharacter, IDamage
         //按下扳机  开火
         if (newState && fromAction.activeDevice.ToString() == "RightHand")
         {
-           Shoot();
+            Shoot();
         }
 
     }
@@ -121,13 +142,9 @@ public class PlayerVR : ICharacter, IDamage
     }
     public void TakeDamage(int amount)
     {
-        data.hp -= amount;
-        if (data.hp <= 0)
-        {
-            Die();
-        }
+        int hp = HP_GetSet() - amount;
+        HP_GetSet (hp);
     }
-
     void Die()
     {
         Debug.Log(gameObject.name + " has been defeated!");

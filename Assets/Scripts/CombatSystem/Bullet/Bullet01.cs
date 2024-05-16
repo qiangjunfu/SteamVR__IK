@@ -7,12 +7,14 @@ using UnityEngine.UIElements;
 
 public class Bullet01 : IBullet
 {
+    [SerializeField] ICharacter owner_Chara;
+    [SerializeField] IWeapon owner_Weapon; 
     private float timeAlive;      // 已存活时间
     private float distanceTravelled; // 已飞行距离
 
 
 
-    public override void SetData(BulletData bulletData)
+    public override void SetData(BulletData bulletData, ICharacter character , IWeapon weapon  )
     {
         data.id = bulletData.id;
         data.name = bulletData.name;
@@ -23,6 +25,9 @@ public class Bullet01 : IBullet
         data.attack = bulletData.attack;
         data.fireRange = bulletData.fireRange;
         data.bulletHolePrePath = bulletData.bulletHolePrePath;
+
+        owner_Chara = character;
+        owner_Weapon = weapon;
 
         InitData();
     }
@@ -43,8 +48,6 @@ public class Bullet01 : IBullet
         float moveDistance = data.speed * Time.deltaTime;
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
-
-        // 检查沿着子弹前进方向的射线是否有碰撞
         if (Physics.Raycast(ray, out hit, moveDistance))
         {
             if (hit.collider)
@@ -68,25 +71,30 @@ public class Bullet01 : IBullet
         }
     }
 
+
+
+    string name1, name2;
     void HandleCollision(RaycastHit hit)
     {
         IDamage enemyDamage = hit.collider.GetComponent<IDamage>();
         if (enemyDamage != null)
         {
-            log.LogFormat("{0} 子弹命中敌人:{1} , pos: {2}", this.name, hit.collider.gameObject, hit.point);
+            name1 = this.owner_Chara.name + " " + owner_Chara.GetId();
+            name2 = hit.collider.gameObject.name + " " + owner_Chara.GetId();
+            log.LogFormat("{0} 子弹命中敌人:{1} , pos: {2}", name1, name2, hit.point);
+            // 理论上是计算枪+子弹自身攻击力
             enemyDamage.TakeDamage(data.attack);
 
             //显示命中特效
-            //string path = "";
+            //string path = "";             string path = "Weapons/Effects/DirtImpact";
             //HitEffect01 hitEffect01 = ComponentPoolManager.Instance.GetObject<HitEffect01>(path, hit.point, Quaternion.LookRotation(hit.normal));
 
         }
         else
         {
             // 显示弹孔特效
-            string path = "Weapons/Effects/DirtImpact";
-            HitEffect02 hitEffect02 = ComponentPoolManager.Instance .GetObject  <HitEffect02>(path ,hit.point, Quaternion.LookRotation(hit.normal));
-        } 
+            HitEffect02 hitEffect02 = ComponentPoolManager.Instance.GetObject<HitEffect02>(data.bulletHolePrePath, hit.point, Quaternion.LookRotation(hit.normal));
+        }
 
         RecycleBullet();
     }

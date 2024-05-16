@@ -89,6 +89,11 @@ public class EnemyCtrl : ICharacter, IDamage
     #endregion
 
 
+
+    public override int GetId()
+    {
+        return data.selfid;
+    }
     public NPCData GetData() { return data; }
     public void SetData(NPCData enemyData, int selfid)
     {
@@ -147,7 +152,7 @@ public class EnemyCtrl : ICharacter, IDamage
             behaviorTree.SetVariable("ViewDis", (SharedFloat)(data.view_Dis));
             behaviorTree.SetVariable("AttackDis", (SharedFloat)(data.attack_Dis));
             behaviorTree.SetVariable("FleeHP", (SharedInt)(data.flee_HP));
-            behaviorTree.SetVariable("SafeDis", (SharedFloat)(data.safe_Dis)); 
+            behaviorTree.SetVariable("SafeDis", (SharedFloat)(data.safe_Dis));
         }
 
 
@@ -169,7 +174,7 @@ public class EnemyCtrl : ICharacter, IDamage
     }
 
 
-    void µ•∂¿≤‚ ‘() 
+    void µ•∂¿≤‚ ‘()
     {
 
         NPCData enemyData = ExcelFileManager.Instance.GetNPCDataList()[0];

@@ -16,6 +16,7 @@ public class BulletData
     [SerializeField, ReadOnly] public int attack;
     [SerializeField, ReadOnly] public int fireRange;
     [SerializeField, ReadOnly] public string bulletHolePrePath;
+    [SerializeField, ReadOnly] public string bulletHolePrePath_Chara;
 
 
     public BulletData() { }

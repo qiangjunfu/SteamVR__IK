@@ -4,6 +4,6 @@ using UnityEngine;
 
 public abstract class ICharacter : MonoBehaviour
 {
-
-    public virtual bool IsDead() {  return false; }
+    public abstract int GetId();
+    public virtual bool IsDead() { return false; }
 }

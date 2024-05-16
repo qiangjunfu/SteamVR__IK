@@ -6,5 +6,5 @@ using UnityEngine;
 public abstract class IBullet : MonoBehaviour
 {
     [SerializeField] protected BulletData data;
-    public abstract void SetData(BulletData bulletData);
+    public abstract void SetData(BulletData bulletData, ICharacter character, IWeapon weapon);
 }
