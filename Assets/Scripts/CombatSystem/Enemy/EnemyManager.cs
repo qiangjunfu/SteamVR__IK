@@ -30,7 +30,7 @@ public class EnemyManager : MonoSingleTon<EnemyManager>, IManager
         this.patrol_Waypoints = UnityTools.GetAllChildrenGameObject(waypoints);
 
 
-        maxEnemyNum = 5;
+        maxEnemyNum = 0;
         for (int i = 0; i < maxEnemyNum; i++)
         {
             NPCData enemyData = ExcelFileManager.Instance.GetNPCDataList()[0];
