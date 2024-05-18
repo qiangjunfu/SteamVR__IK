@@ -37,6 +37,8 @@ public class PlayerVR : ICharacter, IDamage
         data.attack = playerData.attack;
         data.attackSpeed = playerData.attackSpeed;
         data.reloadTime = playerData.reloadTime;
+        data.playerEntityPath = playerData.playerEntityPath;    
+        data.playerheight = playerData.playerheight;    
 
 
         WeaponData weaponData = ExcelFileManager.Instance.GetWeaponDataList()[0];
@@ -79,7 +81,7 @@ public class PlayerVR : ICharacter, IDamage
         deviceTrackManager.InitBind_DeviceTrack(data);
 
 
-        //playerEntity.SetData(data);
+        playerEntity.SetData(data);
         //solverTrackList = playerEntity.GetSolverTrackList();
         //for (int i = 0; i < vr_trackList.Count; i++)
         //{
