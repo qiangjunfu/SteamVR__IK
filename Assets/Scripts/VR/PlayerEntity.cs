@@ -10,6 +10,8 @@ public class PlayerEntity : MonoBehaviour
     [SerializeField] private VRIK vrik;
     [SerializeField] List<Solver_Track> solverTrackList = new List<Solver_Track>();
     [SerializeField] bool isBindTrackLeg = true;
+    [SerializeField, ReadOnly] float originalHeight = 190f;
+    [SerializeField, ReadOnly] float scaleRatio = 1;
 
 
     public List<Solver_Track> GetSolverTrackList()
@@ -19,6 +21,10 @@ public class PlayerEntity : MonoBehaviour
     public void SetData(PlayerData playerData)
     {
         this.data = playerData;
+
+        scaleRatio = RoundToDecimalPlaces(data.playerheight / originalHeight, 3);
+        transform.localScale = new Vector3(scaleRatio, scaleRatio, scaleRatio);
+
 
         InitData();
     }
@@ -70,6 +76,11 @@ public class PlayerEntity : MonoBehaviour
     }
 
 
-
+    // 保留指定位数的小数的方法
+    private float RoundToDecimalPlaces(float value, int decimalPlaces)
+    {
+        float multiplier = Mathf.Pow(10, decimalPlaces);
+        return Mathf.Round(value * multiplier) / multiplier;
+    }
 
 }

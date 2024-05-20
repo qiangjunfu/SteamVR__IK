@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 5351151754388151982}
   - component: {fileID: 3576823041758950742}
   m_Layer: 0
-  m_Name: BulletPos
+  m_Name: MuzzlePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -414,14 +414,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7692020761784239889}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.31054506, y: 0.45119774, z: 0.5175428, w: 0.65736747}
-  m_LocalPosition: {x: 0.39267626, y: 1.1021283, z: 0.2448613}
+  m_LocalRotation: {x: -0.005808096, y: -0.0077724475, z: -0.13651446, w: 0.99059063}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1785482112747997731}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -61.082, y: 34.195, z: 55.854}
+  m_LocalEulerAnglesHint: {x: -0.781, y: -0.792, z: -15.688}
 --- !u!114 &4798981330629067669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,8 +434,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9619eb843bbeb784ab42cf067230c0a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  data:
+    id: 0
+    name: 
+    prePath: 
+    type: 
+    attack: 0
+    maxAmmo: 0
+    reloadTime: 0
+    recoil: 0
+    fireRate: 0
+    fireRange: 0
+    bulletPrePath: 
+    flashPrePath: 
+    audioPrePath: 
+  owner: {fileID: 0}
   muzzlePosition: {fileID: 6191237722206452367}
-  fireRate: 0.5
   currentAmmo: 0
-  maxAmmo: 100

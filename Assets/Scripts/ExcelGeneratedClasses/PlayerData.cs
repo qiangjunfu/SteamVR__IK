@@ -18,6 +18,8 @@ public class PlayerData
     [SerializeField, ReadOnly] public int attack;
     [SerializeField, ReadOnly] public float attackSpeed;
     [SerializeField, ReadOnly] public float reloadTime;
+    [SerializeField, ReadOnly] public string playerEntityPath;
+    [SerializeField, ReadOnly] public float playerheight;
 
 
     public PlayerData() { }
