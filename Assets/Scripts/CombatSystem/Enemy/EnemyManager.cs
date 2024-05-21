@@ -7,8 +7,9 @@ public class EnemyManager : MonoSingleTon<EnemyManager>, IManager
     [SerializeField] Transform spawnPos;
     [SerializeField] List<GameObject> patrol_Waypoints = new List<GameObject>();
     [SerializeField] List<EnemyCtrl> enemyList = new List<EnemyCtrl>();
-    [SerializeField] int maxEnemyNum = 5;
-
+    [SerializeField, ReadOnly] int maxEnemyNum = 0;
+    float timer = 0;
+    float checkTime = 3;
 
     public List<GameObject> Patrol_Waypoints
     {
@@ -30,8 +31,8 @@ public class EnemyManager : MonoSingleTon<EnemyManager>, IManager
         this.patrol_Waypoints = UnityTools.GetAllChildrenGameObject(waypoints);
 
 
-        maxEnemyNum = 0;
-        for (int i = 0; i < maxEnemyNum; i++)
+        maxEnemyNum = ExcelFileManager.Instance.GetSettingDataList()[0].maxEnemyNum;
+        if (maxEnemyNum > 0)
         {
             NPCData enemyData = ExcelFileManager.Instance.GetNPCDataList()[0];
             AddEnemy(enemyData, index);
@@ -41,16 +42,22 @@ public class EnemyManager : MonoSingleTon<EnemyManager>, IManager
 
     void Update()
     {
-        //if (enemyList.Count < 2)
-        //{
-        //    NPCData enemyData = ExcelFileManager.Instance.GetNPCDataList()[0];
-        //    AddEnemy(enemyData, index); 
-        //}
+        timer += Time.deltaTime;
+        if (timer > checkTime)
+        {
+            timer = 0;
+
+            if (enemyList.Count < maxEnemyNum)
+            {
+                NPCData enemyData = ExcelFileManager.Instance.GetNPCDataList()[0];
+                AddEnemy(enemyData, index);
+            }
+        }
     }
 
 
-    int index = 1;
 
+    int index = 1;  //selfid
     public void AddEnemy(NPCData enemyData, int selfid)
     {
         Vector3 pos = spawnPos.position + RandomVector3(-1, 1, 0, 0, -1, 1);

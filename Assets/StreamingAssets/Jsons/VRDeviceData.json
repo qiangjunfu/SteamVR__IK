@@ -2,55 +2,55 @@
   {
     "id": 1,
     "name": "头",
-    "type": null,
-    "modelName": "AIO MN,AA",
-    "serialNumber": "头显",
+    "type": "htc",
+    "modelName": "Vive XR Streaming",
+    "serialNumber": "VIVE XR",
     "tracked_Object": "VRCamera",
     "steamVR_TrackedObject": "Hmd"
   },
   {
     "id": 2,
     "name": "左手",
-    "type": null,
-    "modelName": "左手",
-    "serialNumber": "手柄1",
+    "type": "htc",
+    "modelName": "vive_cosmos_controller",
+    "serialNumber": "CTL_LEFT",
     "tracked_Object": "LeftHand",
     "steamVR_TrackedObject": "Device1"
   },
   {
     "id": 3,
-    "name": "左手",
-    "type": null,
-    "modelName": "左手",
-    "serialNumber": "手柄2",
+    "name": "右手",
+    "type": "htc",
+    "modelName": "vive_cosmos_controller",
+    "serialNumber": "CTL_RIGHT",
     "tracked_Object": "RightHand",
     "steamVR_TrackedObject": "Device2"
   },
   {
     "id": 4,
-    "name": "左腿",
-    "type": null,
-    "modelName": "左腿",
-    "serialNumber": "3B-3BE00489",
-    "tracked_Object": "Leg_L",
+    "name": "腰部",
+    "type": "htc",
+    "modelName": "AIO MN",
+    "serialNumber": "3B-3BD00761",
+    "tracked_Object": "Pelvis",
     "steamVR_TrackedObject": "Device3"
   },
   {
     "id": 5,
-    "name": "右脚",
-    "type": null,
-    "modelName": "右脚",
-    "serialNumber": "3B-3BE00500",
-    "tracked_Object": "Leg_R",
-    "steamVR_TrackedObject": "Device4"
+    "name": "左腿",
+    "type": "htc",
+    "modelName": "AIO MN",
+    "serialNumber": "3B-3BD00770",
+    "tracked_Object": "Leg_L",
+    "steamVR_TrackedObject": "Device5"
   },
   {
     "id": 6,
-    "name": "骨盆",
-    "type": null,
-    "modelName": "骨盆",
-    "serialNumber": "3B-3BE00501",
-    "tracked_Object": "Pelvis",
-    "steamVR_TrackedObject": "Device5"
+    "name": "右脚",
+    "type": "htc",
+    "modelName": "AIO MN",
+    "serialNumber": "3B-3BD00797",
+    "tracked_Object": "Leg_R",
+    "steamVR_TrackedObject": "Device4"
   }
 ]

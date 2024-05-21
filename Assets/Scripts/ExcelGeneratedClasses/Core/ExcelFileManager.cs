@@ -28,28 +28,33 @@ public class ExcelFileManager : MonoSingleTon<ExcelFileManager>, IManager
         ReadExcelFiles(folderPath);
     }
 
+
     #region MyRegion
 
     public List<PlayerData> GetPlayerDataList()
     {
-        return this.playerDataList;
+        return new List<PlayerData>(this.playerDataList);
     }
     public List<NPCData> GetNPCDataList()
     {
-        return this.npcDataList;
+        return new List<NPCData>(this.npcDataList);
     }
     public List<WeaponData> GetWeaponDataList()
     {
-        return this.weapDataList;
+        return new List<WeaponData>(this.weapDataList);
     }
     public List<BulletData> GetBulletDataList()
     {
-        return this.bulletDataList;
+        return new List<BulletData>(this.bulletDataList);
     }
 
     public List<VRDeviceData> GetVRDeviceDataList()
     {
-        return this.vrDeviceDataList;
+        return new List<VRDeviceData>(this.vrDeviceDataList);
+    }
+    public List<SettingData> GetSettingDataList()
+    {
+        return new List<SettingData>(this.settingDataList);
     }
 
     #endregion

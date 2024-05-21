@@ -1,5 +1,6 @@
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,9 +39,26 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                 return TaskStatus.Failure; // 目标超出攻击范围，返回失败
             }
 
+            LookAtTarget();
+
             // 进行攻击
             // Debug.Log("Attacking " + target.Value.name);
+
             return TaskStatus.Running; // 攻击正在进行中
+        }
+
+
+        float timer = 0;
+        float checkTime = 3;
+        void LookAtTarget()
+        {
+            timer += Time.deltaTime;
+            if (timer > checkTime)
+            {
+                timer = 0;
+
+                this.transform.LookAt(target.Value.transform);
+            }
         }
     }
 
