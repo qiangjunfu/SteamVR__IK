@@ -173,6 +173,11 @@ namespace Valve.VR
             SetUniverseOrigin(newOrigin);
             OpenVR.Compositor.SetTrackingSpace(newOrigin);
         }
+
+        public void AddOnChangeListener(object onPoseChange, SteamVR_Input_Sources any)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [Serializable]
