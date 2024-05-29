@@ -357,6 +357,12 @@ namespace Valve.VR.InteractionSystem
         // objectToAttach - The GameObject to attach
         // flags - The flags to use for attaching the object
         // attachmentPoint - Name of the GameObject in the hierarchy of this Hand which should act as the attachment point for this GameObject
+
+        //附加一个GameObject到这个GameObject
+        //
+        // objectToAttach -要附加的游戏对象
+        // flags -用于附加对象的标志
+        // attachmentPoint -这只手的层次结构中的游戏对象的名称，它应该作为这个游戏对象的附着点
         //-------------------------------------------------
         public void AttachObject(GameObject objectToAttach, GrabTypes grabbedWithType, AttachmentFlags flags = defaultAttachmentFlags, Transform attachmentOffset = null)
         {
@@ -850,6 +856,7 @@ namespace Valve.VR.InteractionSystem
 
 
         //-------------------------------------------------
+        //更新手的悬停状态，检测手当前悬停在什么可交互对象上。
         protected virtual void UpdateHovering()
         {
             if ((noSteamVRFallbackCamera == null) && (isActive == false))
