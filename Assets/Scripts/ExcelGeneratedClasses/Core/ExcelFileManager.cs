@@ -12,7 +12,7 @@ using UnityEngine;
 
 public class ExcelFileManager : MonoSingleTon<ExcelFileManager>, IManager
 {
-    [SerializeField, ReadOnly] string folderPath = ""; 
+    [SerializeField, ReadOnly] string folderPath = "";
     [SerializeField] List<PlayerData> playerDataList = new List<PlayerData>();
     [SerializeField] List<NPCData> npcDataList = new List<NPCData>();
     [SerializeField] List<WeaponData> weapDataList = new List<WeaponData>();
@@ -54,10 +54,40 @@ public class ExcelFileManager : MonoSingleTon<ExcelFileManager>, IManager
     {
         return new List<VRDeviceData>(this.vrDeviceDataList);
     }
-    public List<VRDeviceData2> GetVRDeviceDataList2() 
+    public List<VRDeviceData2> GetVRDeviceDataList2()
     {
         return new List<VRDeviceData2>(this.vrDeviceData2List);
     }
+
+    /// <summary>
+    /// 通过传入设备序列号 获取对应的设备配置表信息
+    /// </summary>
+    public VRDeviceData2 GetVRDeviceData2(params string[] serialNumbers)
+    {
+        HashSet<string> serialNumberSet = new HashSet<string>(serialNumbers);
+
+        foreach (var device in vrDeviceData2List)
+        {
+            HashSet<string> deviceSerialNumbers = new HashSet<string>
+            {
+                device.serialNumber_Head,
+                device.serialNumber_LeftHand,
+                device.serialNumber_RightHand,
+                device.serialNumber_LeftFoot,
+                device.serialNumber_RightFoot,
+                device.serialNumber_Waist
+            };
+
+            //if (serialNumberSet.Overlaps(deviceSerialNumbers))   ////传入的任意一个序列号存在于设备对象的序列号集合
+            if (serialNumberSet.IsSubsetOf(deviceSerialNumbers))   ////传入的所有序列号都必须存在于设备对象的序列号集合中 
+            {
+                return device;
+            }
+        }
+
+        return null; 
+    }
+
     public List<SettingData> GetSettingDataList()
     {
         return new List<SettingData>(this.settingDataList);
@@ -133,7 +163,7 @@ public class ExcelFileManager : MonoSingleTon<ExcelFileManager>, IManager
                             Debug.LogWarning($"Unsupported data type {dataType}");
                             break;
                     }
-       
+
 
 
                 }

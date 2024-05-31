@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 using Valve.VR;
 
 public class DeviceTrackManager : MonoBehaviour
@@ -62,8 +63,10 @@ public class DeviceTrackManager : MonoBehaviour
                 string modelName = GetTrackedDeviceString(i, ETrackedDeviceProperty.Prop_ModelNumber_String, ref error);
                 // 尝试获取设备的序列号
                 string serialNumber = GetTrackedDeviceString(i, ETrackedDeviceProperty.Prop_SerialNumber_String, ref error);
+                // 获取设备类型
+                string deviceType = GetTrackedDeviceString(i, ETrackedDeviceProperty.Prop_RenderModelName_String, ref error);
 
-                Debug.Log("Device Index: " + i + " - Model Name: " + modelName + " - Serial Number: " + serialNumber);
+                Debug.Log("Device Index: " + i + " -- Model Name: " + modelName + " -- Serial Number: " + serialNumber + " -- DeviceType: " + deviceType);
 
 
                 if (isBind_SteamVR_TrackedObject)
@@ -111,51 +114,8 @@ public class DeviceTrackManager : MonoBehaviour
             }
         }
 
-        //if (modelName == "AIO MN")
-        //{
-        //    switch (serialNumber)
-        //    {
-        //        case "3B-3BE00489":
-        //            trackedObject_Pelvis.index = SteamVR_TrackedObject.EIndex.Device4;
-        //            break;
-        //        case "3B-3BE00500":
-        //            trackedObject_Leg_R.index = SteamVR_TrackedObject.EIndex.Device3;
-        //            break;
-        //        case "3B-3BE00501":
-        //            trackedObject_Leg_L.index = SteamVR_TrackedObject.EIndex.Device5;
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
-
-        //for (int i = 0; i < playerData.serialNumber.Length; i++)
-        //{
-        //    string _serialNumber = playerData.serialNumber[i];
-        //    string _tracked_Object = playerData.tracked_Object[i];
-        //    string steamVR_TrackedObject = playerData.steamVR_TrackedObject[i];
-
-        //    if (_serialNumber == serialNumber)
-        //    {
-        //        switch (_tracked_Object)
-        //        {
-        //            case "Leg_L":
-        //                trackedObject_Leg_L.index = GetDeviceIndex(steamVR_TrackedObject);
-        //                break;
-        //            case "Leg_R":
-        //                trackedObject_Leg_R.index = GetDeviceIndex(steamVR_TrackedObject);
-        //                break;
-        //            case "Pelvis":
-        //                trackedObject_Pelvis.index = GetDeviceIndex(steamVR_TrackedObject);
-        //                break;
-        //            default:
-        //                break;
-        //        }
-        //    }
-        //}
-
-
     }
+
 
     SteamVR_TrackedObject.EIndex GetDeviceIndex(string device)
     {
@@ -186,6 +146,111 @@ public class DeviceTrackManager : MonoBehaviour
 
         return eIndex;
     }
+
+
+
+    #region  修改为 VRDeviceData2 , 一个VRDeviceData2数据 包含整个vr头显信息
+    public void InitBind_DeviceTrack2(PlayerData playerData)
+    {
+        this.playerData = playerData;
+        vrDeviceDataList = ExcelFileManager.Instance.GetVRDeviceDataList();
+        vrDeviceDataList2 = ExcelFileManager.Instance.GetVRDeviceDataList2();
+
+
+        if (trackedObject_Pelvis == null)
+        {
+            List<SteamVR_TrackedObject> list = UnityTools.GetAllChildrenComponents<SteamVR_TrackedObject>(this.gameObject);
+            for (int i = 0; i < list.Count; i++)
+            {
+                switch (list[i].gameObject.name)
+                {
+                    case "Leg_L":
+                        trackedObject_Leg_L = list[i];
+                        break;
+                    case "Leg_R":
+                        trackedObject_Leg_R = list[i];
+                        break;
+                    case "Pelvis":
+                        trackedObject_Pelvis = list[i];
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+        }
+
+
+        if (OpenVR.System == null)
+        {
+            Debug.LogError("OpenVR System not initialized. Make sure VR headset is connected and VR runtime is installed.");
+            return;
+        }
+
+        List<string> serialNumbers = new List<string>();
+        ETrackedPropertyError error = ETrackedPropertyError.TrackedProp_Success;
+        for (uint i = 0; i < OpenVR.k_unMaxTrackedDeviceCount; i++)
+        {
+            ETrackedDeviceClass deviceClass = OpenVR.System.GetTrackedDeviceClass(i);
+            if (deviceClass != ETrackedDeviceClass.Invalid)
+            {
+                // 尝试获取设备的模型编号
+                string modelName = GetTrackedDeviceString(i, ETrackedDeviceProperty.Prop_ModelNumber_String, ref error);
+                // 尝试获取设备的序列号
+                string serialNumber = GetTrackedDeviceString(i, ETrackedDeviceProperty.Prop_SerialNumber_String, ref error);
+                // 获取设备类型
+                string deviceType = GetTrackedDeviceString(i, ETrackedDeviceProperty.Prop_RenderModelName_String, ref error);
+
+                Debug.Log("Device Index: " + i + " -- Model Name: " + modelName + " -- Serial Number: " + serialNumber + " -- DeviceType: " + deviceType);
+                /*
+                 * 第二套头盔设备信息
+                 * Device Index: 0 -- Model Name: Vive XR Streaming -- Serial Number: VIVE XR -- DeviceType: generic_hmd
+                 * Device Index: 1 -- Model Name: vive_cosmos_controller -- Serial Number: CTL_RIGHT -- DeviceType: {htc_business_streaming}\rendermodels\vive_focus3_controller\vive_focus3_controller_right
+                 * Device Index: 2 -- Model Name: vive_cosmos_controller -- Serial Number: CTL_LEFT -- DeviceType: {htc_business_streaming}\rendermodels\vive_focus3_controller\vive_focus3_controller_left
+                 * Device Index: 3 -- Model Name: AIO MN -- Serial Number: 3B-3BD00294 -- DeviceType: {htc_business_streaming}\rendermodels\vive_ultimate_tracker  1
+                 * Device Index: 4 -- Model Name: AIO MN -- Serial Number: 3B-3BD00752 -- DeviceType: {htc_business_streaming}\rendermodels\vive_ultimate_tracker  2
+                 * Device Index: 5 -- Model Name: AIO MN -- Serial Number: 3B-3BD00802 -- DeviceType: {htc_business_streaming}\rendermodels\vive_ultimate_tracker  3
+                 * */
+
+
+                serialNumbers.Add(serialNumber);
+            }
+        }
+
+        if (isBind_SteamVR_TrackedObject)
+        {
+            VRDeviceData2 vrDeviceData2 = ExcelFileManager.Instance.GetVRDeviceData2(serialNumbers.ToArray());
+            if (vrDeviceData2 != null)
+            {
+                trackedObject_Leg_L.index = GetDeviceIndex(vrDeviceData2.steamVR_TrackedObject_LeftFoot);
+                trackedObject_Leg_R.index = GetDeviceIndex(vrDeviceData2.steamVR_TrackedObject_RightFoot);
+                trackedObject_Pelvis.index = GetDeviceIndex(vrDeviceData2.steamVR_TrackedObject_Waist);
+            }
+        }
+    }
+
+    #endregion
+
+}
+
+
+/// <summary>
+/// VR设备硬件信息
+/// </summary>
+public class VRDeviceData_Hardware
+{
+    [SerializeField, ReadOnly] public string modelName_Head;
+    [SerializeField, ReadOnly] public string serialNumber_Head;
+    [SerializeField, ReadOnly] public string modelName_LeftHand;
+    [SerializeField, ReadOnly] public string serialNumber_LeftHand;
+    [SerializeField, ReadOnly] public string modelName_RightHand;
+    [SerializeField, ReadOnly] public string serialNumber_RightHand;
+    [SerializeField, ReadOnly] public string modelName_LeftFoot;
+    [SerializeField, ReadOnly] public string serialNumber_LeftFoot;
+    [SerializeField, ReadOnly] public string modelName_RightFoot;
+    [SerializeField, ReadOnly] public string serialNumber_RightFoot;
+    [SerializeField, ReadOnly] public string modelName_Waist;
+    [SerializeField, ReadOnly] public string serialNumber_Waist;
 
 }
 
