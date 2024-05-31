@@ -12,6 +12,7 @@ public class DeviceTrackManager : MonoBehaviour
     [SerializeField] SteamVR_TrackedObject trackedObject_Pelvis;
     [SerializeField] PlayerData playerData;
     [SerializeField] List<VRDeviceData> vrDeviceDataList;
+    [SerializeField] List<VRDeviceData2> vrDeviceDataList2;
 
 
 
@@ -19,6 +20,7 @@ public class DeviceTrackManager : MonoBehaviour
     {
         this.playerData = playerData;
         vrDeviceDataList = ExcelFileManager.Instance.GetVRDeviceDataList();
+        vrDeviceDataList2 = ExcelFileManager.Instance.GetVRDeviceDataList2();
 
 
         if (trackedObject_Pelvis == null)

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Reflection;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -18,6 +19,7 @@ public class ExcelFileManager : MonoSingleTon<ExcelFileManager>, IManager
     [SerializeField] List<BulletData> bulletDataList = new List<BulletData>();
 
     [SerializeField] List<VRDeviceData> vrDeviceDataList = new List<VRDeviceData>();
+    [SerializeField] List<VRDeviceData2> vrDeviceData2List = new List<VRDeviceData2>();
     [SerializeField] List<SettingData> settingDataList = new List<SettingData>();
 
 
@@ -51,6 +53,10 @@ public class ExcelFileManager : MonoSingleTon<ExcelFileManager>, IManager
     public List<VRDeviceData> GetVRDeviceDataList()
     {
         return new List<VRDeviceData>(this.vrDeviceDataList);
+    }
+    public List<VRDeviceData2> GetVRDeviceDataList2() 
+    {
+        return new List<VRDeviceData2>(this.vrDeviceData2List);
     }
     public List<SettingData> GetSettingDataList()
     {
@@ -112,8 +118,12 @@ public class ExcelFileManager : MonoSingleTon<ExcelFileManager>, IManager
                             break;
 
                         case "VRDeviceData":
-                            List<VRDeviceData> gunDataDataList = JsonConvert.DeserializeObject<List<VRDeviceData>>(jsonData);
-                            this.vrDeviceDataList.AddRange(gunDataDataList);
+                            List<VRDeviceData> VRDeviceDataList = JsonConvert.DeserializeObject<List<VRDeviceData>>(jsonData);
+                            this.vrDeviceDataList.AddRange(VRDeviceDataList);
+                            break;
+                        case "VRDeviceData2":
+                            List<VRDeviceData2> VRDeviceData2List = JsonConvert.DeserializeObject<List<VRDeviceData2>>(jsonData);
+                            this.vrDeviceData2List.AddRange(VRDeviceData2List);
                             break;
                         case "SettingData":
                             List<SettingData> SettingDataList = JsonConvert.DeserializeObject<List<SettingData>>(jsonData);

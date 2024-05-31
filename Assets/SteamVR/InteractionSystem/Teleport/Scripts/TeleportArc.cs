@@ -1,6 +1,7 @@
 ﻿//======= Copyright (c) Valve Corporation, All rights reserved. ===============
 //
 // Purpose: Displays the arc lines for teleporting and does the traces
+//目的:显示传送弧线并做轨迹
 //
 //=============================================================================
 

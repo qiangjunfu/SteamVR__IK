@@ -11,6 +11,8 @@ public class ThrowableEventHandler : MonoBehaviour
 
 
     #region MyRegion
+    //UnityEvent: 适合在Unity编辑器中进行配置，允许通过Inspector进行拖拽设置，非常适合设计人员和非程序员使用。
+    //UnityAction: 适合在代码中进行动态设置和调用，性能更高，灵活性更强，适合程序员在代码中使用。
     private void OnEnable()
     {
         if (throwable == null) throwable = GetComponent<Throwable__2>();

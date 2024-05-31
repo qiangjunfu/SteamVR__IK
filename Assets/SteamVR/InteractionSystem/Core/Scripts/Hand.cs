@@ -159,6 +159,10 @@ namespace Valve.VR.InteractionSystem
 
         //-------------------------------------------------
         // The Interactable object this Hand is currently hovering over
+        //当前鼠标悬停的可交互对象
+
+        //用于获取和设置当前手悬停的交互对象。
+        //当悬停对象发生变化时，发送相应的悬停开始和结束消息。
         //-------------------------------------------------
         public Interactable hoveringInteractable
         {
@@ -601,6 +605,9 @@ namespace Valve.VR.InteractionSystem
         // Detach this GameObject from the attached object stack of this Hand
         //
         // objectToDetach - The GameObject to detach from this Hand
+        //从这个手的附加对象堆栈中分离这个GameObject
+        //
+        // objectToDetach -从这个手分离的游戏对象
         //-------------------------------------------------
         public void DetachObject(GameObject objectToDetach, bool restoreOriginalParent = true)
         {
