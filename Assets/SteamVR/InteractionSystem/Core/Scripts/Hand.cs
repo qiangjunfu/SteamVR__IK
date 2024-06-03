@@ -1127,6 +1127,7 @@ namespace Valve.VR.InteractionSystem
             }
         }
 
+
         /// <summary>
         /// Returns true when the hand is currently hovering over the interactable passed in
         /// </summary>
@@ -1245,6 +1246,52 @@ namespace Valve.VR.InteractionSystem
                 }
             }
         }
+
+
+
+        #region 新增移动  右手传送,左手平移
+        public SteamVR_Action_Vector2 joystickAction; // 假设已有摇杆输入动作
+        public float moveSpeed = 2.0f; // 平滑移动速度
+        public float teleportRange = 10.0f; // 传送距离
+        void Move()
+        {
+            // 新增的手柄输入处理逻辑
+            Vector2 joystickValue = joystickAction.GetAxis(handType);
+            if (handType == SteamVR_Input_Sources.LeftHand)
+            {
+                // 左手平滑移动
+                Vector3 moveDirection = Player.instance.hmdTransform.right * joystickValue.x + Player.instance.hmdTransform.forward * joystickValue.y;
+                moveDirection.y = 0; // 防止上下移动
+                Player.instance.transform.position += moveDirection * moveSpeed * Time.deltaTime;
+            }
+            else if (handType == SteamVR_Input_Sources.RightHand)
+            {
+                // 屏蔽原有的传送逻辑，只保留旋转逻辑
+                if (joystickValue.y > 0.8f) // 这里假设前推超过0.8时执行新的传送逻辑
+                {
+                    Vector3 teleportDirection = Player.instance.hmdTransform.forward;
+                    teleportDirection.y = 0; // 防止上下传送
+                    Player.instance.transform.position += teleportDirection * teleportRange;
+                }
+                else
+                {
+                    // 保留旋转逻辑
+                    HandleRotation(joystickValue);
+                }
+            }
+        }
+        private void HandleRotation(Vector2 joystickValue)
+        {
+            // 这里添加旋转逻辑，例如左右旋转
+            if (joystickValue.x != 0)
+            {
+                Player.instance.transform.Rotate(0, joystickValue.x * 45 * Time.deltaTime, 0); // 这里假设每秒旋转45度
+            }
+        }
+        #endregion
+
+
+
 
         protected const float MaxVelocityChange = 10f;
         protected const float VelocityMagic = 6000f;
