@@ -1,10 +1,11 @@
-﻿//======= Copyright (c) Valve Corporation, All rights reserved. ===============
+//======= Copyright (c) Valve Corporation, All rights reserved. ===============
 using UnityEngine;
 using System.Collections;
 
+
 namespace Valve.VR.Extras
 {
-    public class SteamVR_LaserPointer : MonoBehaviour
+    public class SteamVR_LaserPointer__2 : MonoBehaviour
     {
         public SteamVR_Behaviour_Pose pose;
 
@@ -12,7 +13,7 @@ namespace Valve.VR.Extras
         public SteamVR_Action_Boolean interactWithUI = SteamVR_Input.GetBooleanAction("InteractUI");
 
         public bool active = true;
-        public Color color;
+        public Color color = Color.green;
         public float thickness = 0.002f;
         public Color clickColor = Color.green;
         public GameObject holder;
@@ -91,11 +92,12 @@ namespace Valve.VR.Extras
 
         private void Update()
         {
-            if (!isActive)
-            {
-                isActive = true;
-                this.transform.GetChild(0).gameObject.SetActive(true);
-            }
+            if (!isActivePointer) return;
+            //if (!isActive)
+            //{
+            //    isActive = true;
+            //    this.transform.GetChild(0).gameObject.SetActive(true);
+            //}
 
             float dist = 100f;
 
@@ -157,20 +159,29 @@ namespace Valve.VR.Extras
 
 
 
-       
+
+        bool isActivePointer = true ;
         public void ActiveLaserPointer(bool isActive)
         {
-            pointer.SetActive(isActive);
+            if (isActivePointer != isActive)
+            {
+                //Debug.Log("ActiveLaserPointer()  isActive: " + isActive);
+                isActivePointer = isActive;
+                pointer.SetActive(isActive);
+                this.transform.GetChild(0).gameObject.SetActive(isActive);
+
+                if (!isActive && previousContact != null)
+                {
+                    PointerEventArgs args = new PointerEventArgs();
+                    args.fromInputSource = pose.inputSource;
+                    args.distance = 0f;
+                    args.flags = 0;
+                    args.target = previousContact;
+                    OnPointerOut(args);
+                    previousContact = null;
+                }
+            }
         }
     }
 
-    public struct PointerEventArgs
-    {
-        public SteamVR_Input_Sources fromInputSource;
-        public uint flags;
-        public float distance;
-        public Transform target;
-    }
-
-    public delegate void PointerEventHandler(object sender, PointerEventArgs e);
 }

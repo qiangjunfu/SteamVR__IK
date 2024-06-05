@@ -31,14 +31,15 @@ public abstract class UIVRInteractable : MonoBehaviour
         */
         if (rect == null) { rect = GetComponent<RectTransform>(); }
         if (boxCollider == null) { boxCollider = GetComponent<BoxCollider>(); }
-        //boxCollider.size = new Vector3(rect.sizeDelta.x, rect.sizeDelta.y, 1);
+        boxCollider.size = new Vector3(rect.sizeDelta.x, rect.sizeDelta.y, 1);
+
     }
 
 
     protected virtual void Awake()
     {
-        if (rect == null) { rect = GetComponent<RectTransform>(); }
-        if (boxCollider == null) { boxCollider = GetComponent<BoxCollider>(); }
+        rect = rect ?? GetComponent<RectTransform>();
+        boxCollider = boxCollider ?? GetComponent<BoxCollider>();
         boxCollider.size = new Vector3(rect.sizeDelta.x, rect.sizeDelta.y, 1);
 
     }

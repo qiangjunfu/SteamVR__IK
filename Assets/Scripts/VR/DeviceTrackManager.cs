@@ -234,25 +234,25 @@ public class DeviceTrackManager : MonoBehaviour
 }
 
 
-/// <summary>
-/// VR设备硬件信息
-/// </summary>
-public class VRDeviceData_Hardware
-{
-    [SerializeField, ReadOnly] public string modelName_Head;
-    [SerializeField, ReadOnly] public string serialNumber_Head;
-    [SerializeField, ReadOnly] public string modelName_LeftHand;
-    [SerializeField, ReadOnly] public string serialNumber_LeftHand;
-    [SerializeField, ReadOnly] public string modelName_RightHand;
-    [SerializeField, ReadOnly] public string serialNumber_RightHand;
-    [SerializeField, ReadOnly] public string modelName_LeftFoot;
-    [SerializeField, ReadOnly] public string serialNumber_LeftFoot;
-    [SerializeField, ReadOnly] public string modelName_RightFoot;
-    [SerializeField, ReadOnly] public string serialNumber_RightFoot;
-    [SerializeField, ReadOnly] public string modelName_Waist;
-    [SerializeField, ReadOnly] public string serialNumber_Waist;
+///// <summary>
+///// VR设备硬件信息
+///// </summary>
+//public class VRDeviceData_Hardware
+//{
+//    [SerializeField, ReadOnly] public string modelName_Head;
+//    [SerializeField, ReadOnly] public string serialNumber_Head;
+//    [SerializeField, ReadOnly] public string modelName_LeftHand;
+//    [SerializeField, ReadOnly] public string serialNumber_LeftHand;
+//    [SerializeField, ReadOnly] public string modelName_RightHand;
+//    [SerializeField, ReadOnly] public string serialNumber_RightHand;
+//    [SerializeField, ReadOnly] public string modelName_LeftFoot;
+//    [SerializeField, ReadOnly] public string serialNumber_LeftFoot;
+//    [SerializeField, ReadOnly] public string modelName_RightFoot;
+//    [SerializeField, ReadOnly] public string serialNumber_RightFoot;
+//    [SerializeField, ReadOnly] public string modelName_Waist;
+//    [SerializeField, ReadOnly] public string serialNumber_Waist;
 
-}
+//}
 
 
 #region MyRegion

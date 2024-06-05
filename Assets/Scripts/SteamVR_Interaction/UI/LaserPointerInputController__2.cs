@@ -7,10 +7,10 @@ using Valve.VR;
 using Valve.VR.Extras;
 
 
-[RequireComponent(typeof(SteamVR_LaserPointer))]
-public class LaserPointerInputController : MonoBehaviour
+[RequireComponent(typeof(SteamVR_LaserPointer__2))]
+public class LaserPointerInputController__2 : MonoBehaviour 
 {
-    [SerializeField] SteamVR_LaserPointer laserPointer;
+    [SerializeField] SteamVR_LaserPointer__2 laserPointer;
     [SerializeField] SteamVR_Action_Single squeeze = SteamVR_Input.GetSingleAction("Squeeze");
     [SerializeField] float squeezeAxis = 0;
     [SerializeField] UIVRInteractable currentUI = null;
@@ -20,7 +20,7 @@ public class LaserPointerInputController : MonoBehaviour
 
     private void OnEnable()
     {
-        if (laserPointer == null) laserPointer = GetComponent<SteamVR_LaserPointer>();
+        if (laserPointer == null) laserPointer = GetComponent<SteamVR_LaserPointer__2>();
 
         laserPointer.PointerIn += OnPointerIn;
         laserPointer.PointerOut += OnPointerOut;
@@ -73,8 +73,10 @@ public class LaserPointerInputController : MonoBehaviour
 
     private void Update()
     {
-        squeezeAxis = squeeze.axis;
-        if (squeezeAxis <= 0.05)
+        //squeezeAxis = squeeze.axis;
+        squeezeAxis = squeeze.GetAxis(SteamVR_Input_Sources.RightHand);
+
+        if (squeezeAxis < 0.05)
         {
             laserPointer.ActiveLaserPointer(false);
         }
