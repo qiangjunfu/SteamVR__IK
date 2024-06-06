@@ -2,10 +2,10 @@
   {
     "id": 1,
     "name": "gun1",
-    "prePath": "Weapons/Gun/SciFiRifle",
+    "prePath": "Weapons/Gun/MP-40",
     "type": "步枪",
     "attack": 100,
-    "maxAmmo": 30,
+    "maxAmmo": 100,
     "reloadTime": 1,
     "recoil": 1,
     "fireRate": 1,

@@ -119,7 +119,7 @@ public class EnemyCtrl : ICharacter, IDamage
 
         InitData();
 
-        WeaponData weaponData = ExcelFileManager.Instance.GetWeaponDataList()[0];
+        WeaponData weaponData = ExcelFileManager.Instance.GetWeaponDataList()[1];
         SetWeapon(weaponData);
     }
     public void SetWeapon(WeaponData weaponData)

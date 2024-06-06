@@ -13,8 +13,10 @@ namespace Valve.VR.InteractionSystem
 	//-------------------------------------------------------------------------
 	public class Teleport : MonoBehaviour
     {
+        //传送动作绑定的控制器按钮
         public SteamVR_Action_Boolean teleportAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("Teleport");
 
+        //用于路径追踪的层掩码
         public LayerMask traceLayerMask;
 		public LayerMask floorFixupTraceLayerMask;
 		public float floorFixupMaximumTraceDistance = 1.0f;
@@ -24,7 +26,8 @@ namespace Valve.VR.InteractionSystem
 		public Material pointVisibleMaterial;
 		public Material pointLockedMaterial;
 		public Material pointHighlightedMaterial;
-		public Transform destinationReticleTransform;
+        // 用于显示传送目的地的指示器
+        public Transform destinationReticleTransform;
 		public Transform invalidReticleTransform;
 		public GameObject playAreaPreviewCorner;
 		public GameObject playAreaPreviewSide;
@@ -33,10 +36,12 @@ namespace Valve.VR.InteractionSystem
 		public Color pointerLockedColor;
 		public bool showPlayAreaMarker = true;
 
-		public float teleportFadeTime = 0.1f;
+        // 传送时淡入淡出的时间
+        public float teleportFadeTime = 0.1f;
 		public float meshFadeTime = 0.2f;
 
-		public float arcDistance = 10.0f;
+        //弧线传送的最大距离。
+        public float arcDistance = 10.0f;
 
 		[Header( "Effects" )]
 		public Transform onActivateObjectTransform;
@@ -65,7 +70,8 @@ namespace Valve.VR.InteractionSystem
 		public MeshRenderer floorDebugSphere;
 		public LineRenderer floorDebugLine;
 
-		private LineRenderer pointerLineRenderer;
+        //绘制传送路径的线渲染器。
+        private LineRenderer pointerLineRenderer;
 		private GameObject teleportPointerObject;
 		private Transform pointerStartTransform;
 		private Hand pointerHand = null;
@@ -310,8 +316,9 @@ namespace Valve.VR.InteractionSystem
 		}
 
 
-		//-------------------------------------------------
-		private void UpdatePointer()
+        //-------------------------------------------------
+        //更新传送指针的状态和位置。
+        private void UpdatePointer()
 		{
 			Vector3 pointerStart = pointerStartTransform.position;
 			Vector3 pointerEnd;
@@ -828,8 +835,9 @@ namespace Valve.VR.InteractionSystem
 		}
 
 
-		//-------------------------------------------------
-		private void InitiateTeleportFade()
+        //-------------------------------------------------
+        //开始传送淡出效果
+        private void InitiateTeleportFade()
 		{
 			teleporting = true;
 

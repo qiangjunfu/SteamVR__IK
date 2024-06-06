@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "showLog": true,
+    "resolution": [
+      1920,
+      1080
+    ],
+    "fullScreen": true,
+    "language": "chinese",
+    "quality": "hight",
+    "volume": 100,
+    "viewDistance": 1000.0,
+    "fieldOfView": 90.0,
+    "vsync": true,
+    "maxEnemyNum": 5
+  }
+]

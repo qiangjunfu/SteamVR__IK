@@ -159,6 +159,10 @@ namespace Valve.VR.InteractionSystem
 
         //-------------------------------------------------
         // The Interactable object this Hand is currently hovering over
+        //当前鼠标悬停的可交互对象
+
+        //用于获取和设置当前手悬停的交互对象。
+        //当悬停对象发生变化时，发送相应的悬停开始和结束消息。
         //-------------------------------------------------
         public Interactable hoveringInteractable
         {
@@ -357,6 +361,12 @@ namespace Valve.VR.InteractionSystem
         // objectToAttach - The GameObject to attach
         // flags - The flags to use for attaching the object
         // attachmentPoint - Name of the GameObject in the hierarchy of this Hand which should act as the attachment point for this GameObject
+
+        //附加一个GameObject到这个GameObject
+        //
+        // objectToAttach -要附加的游戏对象
+        // flags -用于附加对象的标志
+        // attachmentPoint -这只手的层次结构中的游戏对象的名称，它应该作为这个游戏对象的附着点
         //-------------------------------------------------
         public void AttachObject(GameObject objectToAttach, GrabTypes grabbedWithType, AttachmentFlags flags = defaultAttachmentFlags, Transform attachmentOffset = null)
         {
@@ -595,6 +605,9 @@ namespace Valve.VR.InteractionSystem
         // Detach this GameObject from the attached object stack of this Hand
         //
         // objectToDetach - The GameObject to detach from this Hand
+        //从这个手的附加对象堆栈中分离这个GameObject
+        //
+        // objectToDetach -从这个手分离的游戏对象
         //-------------------------------------------------
         public void DetachObject(GameObject objectToDetach, bool restoreOriginalParent = true)
         {
@@ -850,6 +863,7 @@ namespace Valve.VR.InteractionSystem
 
 
         //-------------------------------------------------
+        //更新手的悬停状态，检测手当前悬停在什么可交互对象上。
         protected virtual void UpdateHovering()
         {
             if ((noSteamVRFallbackCamera == null) && (isActive == false))
@@ -1113,6 +1127,7 @@ namespace Valve.VR.InteractionSystem
             }
         }
 
+
         /// <summary>
         /// Returns true when the hand is currently hovering over the interactable passed in
         /// </summary>
@@ -1231,6 +1246,52 @@ namespace Valve.VR.InteractionSystem
                 }
             }
         }
+
+
+
+        #region 新增移动  右手传送,左手平移
+        public SteamVR_Action_Vector2 joystickAction; // 假设已有摇杆输入动作
+        public float moveSpeed = 2.0f; // 平滑移动速度
+        public float teleportRange = 10.0f; // 传送距离
+        void Move()
+        {
+            // 新增的手柄输入处理逻辑
+            Vector2 joystickValue = joystickAction.GetAxis(handType);
+            if (handType == SteamVR_Input_Sources.LeftHand)
+            {
+                // 左手平滑移动
+                Vector3 moveDirection = Player.instance.hmdTransform.right * joystickValue.x + Player.instance.hmdTransform.forward * joystickValue.y;
+                moveDirection.y = 0; // 防止上下移动
+                Player.instance.transform.position += moveDirection * moveSpeed * Time.deltaTime;
+            }
+            else if (handType == SteamVR_Input_Sources.RightHand)
+            {
+                // 屏蔽原有的传送逻辑，只保留旋转逻辑
+                if (joystickValue.y > 0.8f) // 这里假设前推超过0.8时执行新的传送逻辑
+                {
+                    Vector3 teleportDirection = Player.instance.hmdTransform.forward;
+                    teleportDirection.y = 0; // 防止上下传送
+                    Player.instance.transform.position += teleportDirection * teleportRange;
+                }
+                else
+                {
+                    // 保留旋转逻辑
+                    HandleRotation(joystickValue);
+                }
+            }
+        }
+        private void HandleRotation(Vector2 joystickValue)
+        {
+            // 这里添加旋转逻辑，例如左右旋转
+            if (joystickValue.x != 0)
+            {
+                Player.instance.transform.Rotate(0, joystickValue.x * 45 * Time.deltaTime, 0); // 这里假设每秒旋转45度
+            }
+        }
+        #endregion
+
+
+
 
         protected const float MaxVelocityChange = 10f;
         protected const float VelocityMagic = 6000f;

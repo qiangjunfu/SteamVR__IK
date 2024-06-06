@@ -154,6 +154,14 @@ namespace Valve.VR.Extras
             }
             pointer.transform.localPosition = new Vector3(0f, 0f, dist / 2f);
         }
+
+
+
+       
+        public void ActiveLaserPointer(bool isActive)
+        {
+            pointer.SetActive(isActive);
+        }
     }
 
     public struct PointerEventArgs

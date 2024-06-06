@@ -6,18 +6,20 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Reflection;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class ExcelFileManager : MonoSingleTon<ExcelFileManager>, IManager
 {
-    [SerializeField, ReadOnly] string folderPath = ""; 
+    [SerializeField, ReadOnly] string folderPath = "";
     [SerializeField] List<PlayerData> playerDataList = new List<PlayerData>();
     [SerializeField] List<NPCData> npcDataList = new List<NPCData>();
     [SerializeField] List<WeaponData> weapDataList = new List<WeaponData>();
     [SerializeField] List<BulletData> bulletDataList = new List<BulletData>();
 
     [SerializeField] List<VRDeviceData> vrDeviceDataList = new List<VRDeviceData>();
+    [SerializeField] List<VRDeviceData2> vrDeviceData2List = new List<VRDeviceData2>();
     [SerializeField] List<SettingData> settingDataList = new List<SettingData>();
 
 
@@ -28,28 +30,67 @@ public class ExcelFileManager : MonoSingleTon<ExcelFileManager>, IManager
         ReadExcelFiles(folderPath);
     }
 
+
     #region MyRegion
 
     public List<PlayerData> GetPlayerDataList()
     {
-        return this.playerDataList;
+        return new List<PlayerData>(this.playerDataList);
     }
     public List<NPCData> GetNPCDataList()
     {
-        return this.npcDataList;
+        return new List<NPCData>(this.npcDataList);
     }
     public List<WeaponData> GetWeaponDataList()
     {
-        return this.weapDataList;
+        return new List<WeaponData>(this.weapDataList);
     }
     public List<BulletData> GetBulletDataList()
     {
-        return this.bulletDataList;
+        return new List<BulletData>(this.bulletDataList);
     }
 
     public List<VRDeviceData> GetVRDeviceDataList()
     {
-        return this.vrDeviceDataList;
+        return new List<VRDeviceData>(this.vrDeviceDataList);
+    }
+    public List<VRDeviceData2> GetVRDeviceDataList2()
+    {
+        return new List<VRDeviceData2>(this.vrDeviceData2List);
+    }
+
+    /// <summary>
+    /// 通过传入设备序列号 获取对应的设备配置表信息
+    /// </summary>
+    public VRDeviceData2 GetVRDeviceData2(params string[] serialNumbers)
+    {
+        HashSet<string> serialNumberSet = new HashSet<string>(serialNumbers);
+
+        foreach (var device in vrDeviceData2List)
+        {
+            HashSet<string> deviceSerialNumbers = new HashSet<string>
+            {
+                device.serialNumber_Head,
+                device.serialNumber_LeftHand,
+                device.serialNumber_RightHand,
+                device.serialNumber_LeftFoot,
+                device.serialNumber_RightFoot,
+                device.serialNumber_Waist
+            };
+
+            //if (serialNumberSet.Overlaps(deviceSerialNumbers))   ////传入的任意一个序列号存在于设备对象的序列号集合
+            if (serialNumberSet.IsSubsetOf(deviceSerialNumbers))   ////传入的所有序列号都必须存在于设备对象的序列号集合中 
+            {
+                return device;
+            }
+        }
+
+        return null; 
+    }
+
+    public List<SettingData> GetSettingDataList()
+    {
+        return new List<SettingData>(this.settingDataList);
     }
 
     #endregion
@@ -107,8 +148,12 @@ public class ExcelFileManager : MonoSingleTon<ExcelFileManager>, IManager
                             break;
 
                         case "VRDeviceData":
-                            List<VRDeviceData> gunDataDataList = JsonConvert.DeserializeObject<List<VRDeviceData>>(jsonData);
-                            this.vrDeviceDataList.AddRange(gunDataDataList);
+                            List<VRDeviceData> VRDeviceDataList = JsonConvert.DeserializeObject<List<VRDeviceData>>(jsonData);
+                            this.vrDeviceDataList.AddRange(VRDeviceDataList);
+                            break;
+                        case "VRDeviceData2":
+                            List<VRDeviceData2> VRDeviceData2List = JsonConvert.DeserializeObject<List<VRDeviceData2>>(jsonData);
+                            this.vrDeviceData2List.AddRange(VRDeviceData2List);
                             break;
                         case "SettingData":
                             List<SettingData> SettingDataList = JsonConvert.DeserializeObject<List<SettingData>>(jsonData);
@@ -118,7 +163,7 @@ public class ExcelFileManager : MonoSingleTon<ExcelFileManager>, IManager
                             Debug.LogWarning($"Unsupported data type {dataType}");
                             break;
                     }
-       
+
 
 
                 }
