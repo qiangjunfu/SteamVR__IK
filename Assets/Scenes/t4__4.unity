@@ -9418,9 +9418,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64af7ebd3667e8b4ba9c96a2e9cf6b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBind_SteamVR_TrackedObject: 0
   trackedObject_Leg_L: {fileID: 0}
   trackedObject_Leg_R: {fileID: 0}
   trackedObject_Pelvis: {fileID: 0}
+  playerData:
+    id: 0
+    selfid: 0
+    name: 
+    type: 
+    prePath: 
+    hp: 0
+    defence: 0
+    speed: 0
+    attack: 0
+    attackSpeed: 0
+    reloadTime: 0
+    playerEntityPath: 
+    playerheight: 0
+  vrDeviceDataList: []
+  vrDeviceDataList2: []
 --- !u!1 &1377225446
 GameObject:
   m_ObjectHideFlags: 0
