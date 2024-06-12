@@ -48,7 +48,8 @@ public class PlayerVR : ICharacter, IDamage
     {
         if (weapon == null)
         {
-            weapon = AssetsLoadManager.Instance.LoadComponent<IWeapon>(weaponData.prePath, weaponParent);
+            Transform parent = weaponParent.Find(weaponData.name);
+            weapon = AssetsLoadManager.Instance.LoadComponent<IWeapon>(weaponData.prePath, parent);
         }
         weapon.SetData(weaponData, this);
     }

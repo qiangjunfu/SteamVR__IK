@@ -49,11 +49,12 @@ public class Gun01 : IWeapon
     {
         currentAmmo = data.maxAmmo;          // 初始子弹数量设置为最大
         fireTimer = 0;                  // 初始设置计时器为0
+
     }
 
     void Start()
     {
-
+        if (muzzlePosition == null ) { muzzlePosition = transform.Find("MuzzlePosition"); }
     }
 
     void Update()

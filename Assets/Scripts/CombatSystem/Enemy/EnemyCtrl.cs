@@ -119,14 +119,15 @@ public class EnemyCtrl : ICharacter, IDamage
 
         InitData();
 
-        WeaponData weaponData = ExcelFileManager.Instance.GetWeaponDataList()[1];
+        WeaponData weaponData = ExcelFileManager.Instance.GetWeaponDataList()[0];
         SetWeapon(weaponData);
     }
     public void SetWeapon(WeaponData weaponData)
     {
         if (weapon == null)
         {
-            weapon = AssetsLoadManager.Instance.LoadComponent<IWeapon>(weaponData.prePath, rightGunBone);
+            Transform parent = rightGunBone.Find(weaponData.name);
+            weapon = AssetsLoadManager.Instance.LoadComponent<IWeapon>(weaponData.prePath, parent );
         }
         weapon.SetData(weaponData, this);
     }
